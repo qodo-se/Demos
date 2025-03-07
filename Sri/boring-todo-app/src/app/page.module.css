@@ -1,0 +1,54 @@
+.page {
+  font-family: "OpenDyslexic", "Atkinson Hyperlegible Next", sans-serif;
+  display: grid;
+  grid-template-rows: 20px 1fr 20px;
+  align-items: top;
+  padding: 3rem;
+  gap: 64px;
+}
+
+.todo_item_add {
+  font-family: "OpenDyslexic", "Atkinson Hyperlegible Next", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  padding: 3rem 1rem;
+  border-radius: 0.3rem;
+}
+
+.todo_list {
+  margin: 3rem 0 0 0;
+}
+
+.todo_list_item {
+  font-family: "OpenDyslexic", "Atkinson Hyperlegible Next", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  display: grid;
+  grid-template-columns: 1fr 80px;
+  grid-gap: 20px;
+  align-items: baseline;
+  cursor: pointer;
+  opacity: 0.66;
+  border-left: 1rem solid transparent;
+  padding-left: 1rem;
+}
+
+.todo_list_item_completed {
+  text-decoration: line-through;
+}
+
+.todo_list_item_delete {
+  cursor: pointer;
+  font-size: 2rem;
+  color: red;
+  opacity: 0;
+}
+
+.todo_list_item:hover {
+  opacity: 1;
+  border-left: 1rem solid #fff;
+}
+
+.todo_list_item:hover .todo_list_item_delete {
+  opacity: 1;
+}
