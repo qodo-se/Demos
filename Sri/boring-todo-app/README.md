@@ -1,5 +1,7 @@
 # boring-todo-app
 
+This is a basic Next.js todo app.
+
 ## Original Next.js Readme
 
 ```markdown
