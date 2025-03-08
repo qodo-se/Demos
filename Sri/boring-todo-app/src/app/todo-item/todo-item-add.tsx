@@ -9,7 +9,7 @@ interface Props {
 /**
  * A React component that renders an input field for adding new todo items.
  * 
- * @param dataSource - Array of existing todo items to check for duplicates
+ * @param dataSource - Array of existing todo items to che∏k for duplicates
  * @param onSubmitted - Callback function triggered when a valid todo item is submitted
  * @returns Input element that handles todo item addition on Enter key press
  */
