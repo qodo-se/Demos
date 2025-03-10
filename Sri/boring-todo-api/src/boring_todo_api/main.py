@@ -1,21 +1,41 @@
+from typing import List
+from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+
+# Define data model for todo items
+class TodoItem(BaseModel):
+    text: str
+    completed: bool = False
+
+
+app = FastAPI(
+    title="Todo API", description="A simple FastAPI todo items service", version="1.0.0"
+)
+
+# Configure CORS middleware
+origins = ["http://localhost:3001"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-@app.get("/items")
-async def list_items():
+@app.get("/items", response_model=List[TodoItem], tags=["items"])
+async def list_items() -> List[TodoItem]:
+    """
+    Retrieve a list of todo items.
+
+    Returns:
+        List[TodoItem]: A list of todo items with text and completed status
+    """
     return [
-        {"text": "hello world", "completed": False},
-        {"text": "foo bar", "completed": False},
-        {"text": "lorem ipsum", "completed": False},
+        TodoItem(text="hello world"),
+        TodoItem(text="foo bar"),
+        TodoItem(text="lorem ipsum"),
     ]
