@@ -11,9 +11,13 @@ export default function TodoList(
     { dataSource, onItemRemoved, onItemToggle }: Props
 ) {
     const listItems = dataSource.map((item, index) => {
-        const classNames = [styles.todo_list_item];
-        let deleteLink = (<a className={styles.todo_list_item_delete}
-            onClick={() => onItemRemoved(index)}>🗑️</a>);
+        const classNames = ["todo_list_item", styles.todo_list_item];
+        let deleteLink = (
+            <a
+                className={[styles.todo_list_item_delete, "todo_list_item_delete"].join(" ")}
+                onClick={() => onItemRemoved(index)}>
+                🗑️
+            </a>);
         if (item.completed) {
             classNames.push(styles.todo_list_item_completed);
             deleteLink = (<></>);
@@ -22,13 +26,17 @@ export default function TodoList(
         return (
             <li className={classNames.join(" ")}
                 key={index}>
-                <span onClick={() => onItemToggle(index)}>{item.text}</span>
+                <span
+                    className="todo_list_item_text"
+                    onClick={() => onItemToggle(index)}>{item.text}</span>
                 {deleteLink}
             </li>
         );
     });
     return (
-        <ul className={styles.todo_list}>
+        <ul
+            id="todo_list"
+            className={styles.todo_list}>
             {listItems}
         </ul>
     );
