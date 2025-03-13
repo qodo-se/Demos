@@ -26,6 +26,7 @@ export default function TodoList(
         return (
             <li className={classNames.join(" ")}
                 key={index}>
+                <span className="category">test category</span>
                 <span
                     className="todo_list_item_text"
                     onClick={() => onItemToggle(index)}>{item.text}</span>
