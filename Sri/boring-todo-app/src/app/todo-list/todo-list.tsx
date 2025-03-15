@@ -3,7 +3,7 @@ import { TodoItem } from "../todo-item/todo-item-type";
 
 interface Props {
     dataSource: Array<TodoItem>;
-    onItemRemoved: (index: number) => void;
+    onItemRemoved: (itemId: number) => void;
     onItemToggle: (index: number) => void;
 }
 
@@ -15,7 +15,7 @@ export default function TodoList(
         let deleteLink = (
             <a
                 className={[styles.todo_list_item_delete, "todo_list_item_delete"].join(" ")}
-                onClick={() => onItemRemoved(index)}>
+                onClick={() => item.id !== undefined ? onItemRemoved(item.id) : null}>
                 🗑️
             </a>);
         if (item.completed) {
@@ -25,7 +25,7 @@ export default function TodoList(
 
         return (
             <li className={classNames.join(" ")}
-                key={index}>
+                key={item.id || index}>
                 <span
                     className="todo_list_item_text"
                     onClick={() => onItemToggle(index)}>{item.text}</span>
