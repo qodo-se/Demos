@@ -1,5 +1,34 @@
 # Tushar's Test Scenarios
 
+## Email — 2025-03-19
+
+```md
+Hi Noah,
+Here’s one more script that I would like to see automated in Qodo.
+Note that this is recording for testRigor tool.
+open url https://flex-qa-plc.stage.pathlockgrc.com/App/LoginPage.aspx
+enter "QA_Admin" into "Username"
+enter "Welcome@123" into "Password"
+click "Sign In"
+click on "Open Menu"
+click "Compliance"
+click "Campaigns"
+hover over "Export"
+click "Schedule Report"
+enter "Test123" into "ctl00$ctl00$ctl00$ctl00$ProfileTailorHeader1$ProfileTailorMenuPanel1$ReportSchedule1$TabContainer$ScheduleInfo$txtScreenName"
+click "Save"
+click on "Open Menu"
+click "Admin"
+click "Scheduled Reports"
+click "Reporting"
+click "Scheduled Reports"
+enter "Test123" into "ctl00$ctl00$ctl00$A$DataControls$DataPlaceHolder$pageTabContainer$TabPanel1$searchBox"
+click checkbox "ctl00$ctl00$ctl00$A$DataControls$DataPlaceHolder$pageTabContainer$TabPanel1$GridView1$ctl02$selectCheckBox"
+click "Delete selected records"
+accept prompt with value "Are you sure you want to delete?"
+open url https://flex-qa-plc.stage.pathlockgrc.com/App/LoginPage.aspx
+```
+
 ## Email — 2025-03-13
 
 ```md
