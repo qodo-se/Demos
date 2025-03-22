@@ -24,6 +24,6 @@ export class LoginPage {
     await this.loginButton.click();
 
     // Wait for navigation to complete after login
-    await this.page.waitForNavigation();
+    await this.page.waitForURL('**/startpage.aspx');
   }
 }

@@ -8,13 +8,15 @@ export class ScheduledReportsPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.searchBox = page.locator('[id="ctl00_ctl00_ctl00_A_DataControls_DataPlaceHolder_pageTabContainer_TabPanel1_searchBox"]');
+    this.searchBox = page.locator('#ctl00_ctl00_ctl00_A_DataControls_DataPlaceHolder_pageTabContainer_TabPanel1_searchBox');
     this.selectCheckbox = page.locator('[id="ctl00_ctl00_ctl00_A_DataControls_DataPlaceHolder_pageTabContainer_TabPanel1_GridView1_ctl02_selectCheckBox"]');
     this.deleteSelectedRecordsButton = page.getByText('Delete selected records');
   }
 
   async searchForReport(reportName: string) {
     await this.searchBox.fill(reportName);
+    await this.searchBox.press('Enter');
+    await this.page.waitForURL('/App/Schedules/List.aspx');
   }
 
   async selectReport() {
