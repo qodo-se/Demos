@@ -1,7 +1,7 @@
 {
     "folders": [
         {
-            "name": "boring-todo",
+            "name": "sri/boing-todo",
             "path": "."
         }
     ],
@@ -9,8 +9,8 @@
         "version": "2.0.0",
         "tasks": [
             {
-                "label": "🟩 Boring Todo App :: Run",
-                "command": "./run-boring-todo-app.sh",
+                "label": "🟩 App :: Run",
+                "command": "./run-app.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -22,8 +22,8 @@
                 "group": "build"
             },
             {
-                "label": "🟩🟩 Boring Todo App :: Test",
-                "command": "./test-boring-todo-app.sh",
+                "label": "🟩🟩 App :: Test",
+                "command": "./test-app.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -35,8 +35,8 @@
                 "group": "test"
             },
             {
-                "label": "🟦 Boring Todo Api :: Run",
-                "command": "./run-boring-todo-api.sh",
+                "label": "🟦 Api :: Run",
+                "command": "./run-api.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -48,8 +48,8 @@
                 "group": "build"
             },
             {
-                "label": "🟦🟦 Boring Todo Api :: Test",
-                "command": "./test-boring-todo-api.sh",
+                "label": "🟦🟦 Api :: Test",
+                "command": "./test-api.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -61,8 +61,8 @@
                 "group": "test"
             },
             {
-                "label": "🟧🟧 Boring Todo E2E :: Playwright",
-                "command": "./test-boring-todo-e2e-playwright.sh",
+                "label": "🟧🟧 E2E :: Playwright",
+                "command": "./test-e2e-playwright.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
