@@ -1,0 +1,78 @@
+{
+    "folders": [
+        {
+            "name": "boring-todo",
+            "path": "."
+        }
+    ],
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "🟩 Boring Todo App :: Run",
+                "command": "./run-boring-todo-app.sh",
+                "type": "shell",
+                "args": [],
+                "problemMatcher": [
+                    "$tsc"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "build"
+            },
+            {
+                "label": "🟩🟩 Boring Todo App :: Test",
+                "command": "./test-boring-todo-app.sh",
+                "type": "shell",
+                "args": [],
+                "problemMatcher": [
+                    "$tsc"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "test"
+            },
+            {
+                "label": "🟦 Boring Todo Api :: Run",
+                "command": "./run-boring-todo-api.sh",
+                "type": "shell",
+                "args": [],
+                "problemMatcher": [
+                    "$tsc"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "build"
+            },
+            {
+                "label": "🟦🟦 Boring Todo Api :: Test",
+                "command": "./test-boring-todo-api.sh",
+                "type": "shell",
+                "args": [],
+                "problemMatcher": [
+                    "$tsc"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "test"
+            },
+            {
+                "label": "🟧🟧 Boring Todo E2E :: Playwright",
+                "command": "./test-boring-todo-e2e-playwright.sh",
+                "type": "shell",
+                "args": [],
+                "problemMatcher": [
+                    "$tsc"
+                ],
+                "presentation": {
+                    "reveal": "always"
+                },
+                "group": "test"
+            }
+        ]
+    },
+}
