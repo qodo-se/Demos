@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Sri/boring-todo-api
+        working-directory: Sri/boring-todo/boring-todo-api
 
     steps:
       - name: Checkout
@@ -43,7 +43,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: Sri/boring-todo-app
+        working-directory: Sri/boring-todo/boring-todo-app
 
     steps:
       - name: Checkout
