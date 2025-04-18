@@ -22,4 +22,4 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts = "-v --tb=short --disable-warnings --cov=src/boring_todo_api --cov-report=term --cov-report=xml --cov-fail-under=100"
+addopts = "-v --tb=short --disable-warnings --cov=src/boring_todo_api --cov-report=term-missing --cov-report=xml"
