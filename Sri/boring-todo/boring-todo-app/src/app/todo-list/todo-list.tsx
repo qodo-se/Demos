@@ -15,6 +15,7 @@ export default function TodoList(
         let deleteLink = (
             <a
                 className={[styles.todo_list_item_delete, "todo_list_item_delete"].join(" ")}
+                data-testid={`todo_list_item_delete_${index}`}
                 onClick={() => onItemRemoved(index)}>
                 🗑️
             </a>);
@@ -28,6 +29,7 @@ export default function TodoList(
                 key={index}>
                 <span
                     className="todo_list_item_text"
+                    data-testid={`todo_list_item_text_${index}`}
                     onClick={() => onItemToggle(index)}>{item.text}</span>
                 {deleteLink}
             </li>
@@ -36,7 +38,8 @@ export default function TodoList(
     return (
         <ul
             id="todo_list"
-            className={styles.todo_list}>
+            className={styles.todo_list}
+            data-testid="todo_list">
             {listItems}
         </ul>
     );

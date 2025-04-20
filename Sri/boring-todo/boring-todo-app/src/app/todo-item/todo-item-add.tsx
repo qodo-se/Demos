@@ -35,6 +35,7 @@ export default function TodoItemAdd(
     return (
         <input
             id="todo_item_add_input"
+            data-testid="todo_item_add_input"
             className={styles.todo_item_add}
             autoFocus
             type="text"
