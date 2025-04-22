@@ -25,8 +25,8 @@ PATH_SOURCES=$(pwd)/src/boring_todo_api
 PATH_TESTS=$(pwd)/src/boring_todo_api/tests
 PATH_COVERAGE_REPORT=$(pwd)/coverage.xml
 
-# loop over .py files in $PATH_SOURCES
-for file in $PATH_SOURCES/*.py; do
+# recursively find and loop over .py files in $PATH_SOURCES
+find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
   # get the filename without the path
   filename=$(basename "$file")
 
@@ -35,19 +35,35 @@ for file in $PATH_SOURCES/*.py; do
 
   # skip __init__.py
   if [ "$filename" == "__init__.py" ]; then
+    echo "⏩ Skipping $filename — __init__.py"
     continue
   fi
 
   # skip if file starts with test_
   if [[ "$filename" == test_* ]]; then
+    echo "⏩ Skipping $filename — test file"
     continue
   fi
 
-  PATH_TEST_FILE="$PATH_TESTS/test_$filename_no_ext.py"
+  # get relative path from $PATH_SOURCES
+  rel_path=$(dirname "${file#$PATH_SOURCES/}")
+  
+  # if file is at the root of $PATH_SOURCES, rel_path will be empty
+  if [ "$rel_path" = "." ]; then
+    rel_path=""
+  else
+    # ensure the directory exists in the tests folder
+    mkdir -p "$PATH_TESTS/$rel_path"
+    rel_path="$rel_path/"
+  fi
+
+  PATH_TEST_FILE="$PATH_TESTS/${rel_path}test_$filename_no_ext.py"
+  
   # create test file if it doesn't exist
   if [ ! -f "$PATH_TEST_FILE" ]; then
-  touch "$PATH_TEST_FILE"
+    touch "$PATH_TEST_FILE"
   fi
+  
   # run qodo-cover-agent
   cover-agent \
     --model $MODEL \
