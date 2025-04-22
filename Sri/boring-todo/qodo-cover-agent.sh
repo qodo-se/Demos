@@ -1,13 +1,22 @@
+echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
+echo "🟪🟪🟪 Qodo Cover Agent 🟪🟪🟪"
+echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
+echo ""
+
+# Die if OPENAI_API_KEY is not set
+if [ ! -z "${OPENAI_API_KEY}" ]; then
+  continue
+else
+  echo "🟥🟥🟥 OPENAI_API_KEY required"
+  exit 1
+fi
+
+
 PWD_START=$(pwd)
 PATH_POETRY_PROJECT=$(pwd)/boring-todo-api
 MODEL="gpt-4.1"
 DESIRED_COVERAGE=90
 MAX_ITERATIONS=5
-
-echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
-echo "🟪🟪🟪 Qodo Cover Agent 🟪🟪🟪"
-echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
-echo ""
 
 echo "🟪🟪 Configuration"
 
