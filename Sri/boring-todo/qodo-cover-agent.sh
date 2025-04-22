@@ -20,10 +20,10 @@ MAX_ITERATIONS=5
 
 echo "🟪🟪 Configuration"
 
-echo "Target project: $PATH_POETRY_PROJECT"
-echo "Model: $MODEL"
-echo "Desired coverage: $DESIRED_COVERAGE"
-echo "Max iterations: $MAX_ITERATIONS"
+echo "Target project: \e[4m\e[1m$PATH_POETRY_PROJECT\e[0m\e[0m"
+echo "Model: \e[4m\e[1m$MODEL\e[0m\e[0m"
+echo "Desired coverage: \e[4m\e[1m$DESIRED_COVERAGE\e[0m\e[0m"
+echo "Max iterations: \e[4m\e[1m$MAX_ITERATIONS\e[0m\e[0m"
 echo ""
 
 echo "🟪🟪 Starting Qodo Cover Agent"
@@ -45,29 +45,28 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
 
   # skip __init__.py
   if [ "$filename" == "__init__.py" ]; then
-    echo "⏩ Skipping $filename — __init__.py"
-    echo ""
+    echo "⏩ Skipping \e[4m\e[1m$filename\e[0m\e[0m — __init__.py"
     continue
   fi
 
   # skip if parent directory is tests
   if [[ "$file" == *"/tests/"* ]]; then
-    echo "⏩ Skipping $filename — test directory"
-    echo ""
+    echo "⏩ Skipping \e[4m\e[1m$filename\e[0m\e[0m — test directory"
     continue
   fi
 
   # skip if file starts with test_
   if [[ "$filename" == test_* ]]; then
-    echo "⏩ Skipping $filename — test file"
-    echo ""
+    echo "⏩ Skipping \e[4m\e[1m$filename\e[0m\e[0m — test file"
     continue
   fi
   
   # get relative path from $PATH_SOURCES
   rel_path=$(dirname "${file#$PATH_SOURCES/}")
 
-  echo "🟪🟪 Reviewing $filename"
+  echo ""
+  echo ""
+  echo "🟪🟪 Reviewing \e[4m\e[1m$filename\e[0m\e[0m"
   echo ""
   
   # if file is at the root of $PATH_SOURCES, rel_path will be empty
@@ -83,7 +82,12 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
   
   # create test file if it doesn't exist
   if [ ! -f "$PATH_TEST_FILE" ]; then
+    echo "📄 Creating \e[4m\e[1m$PATH_TEST_FILE\e[0m\e[0m"
+    echo ""
     touch "$PATH_TEST_FILE"
+  else
+    echo "📄 Test found \e[4m\e[1m$PATH_TEST_FILE\e[0m\e[0m"
+    echo ""
   fi
   
   # run qodo-cover-agent
@@ -101,6 +105,11 @@ done
 echo ""
 echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
 echo "🟪🟪 Qodo Cover Agent finished"
+echo "🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪"
+echo ""
+
+echo ""
+echo "🟪🟪 $ git status "
 echo ""
 
 git status
