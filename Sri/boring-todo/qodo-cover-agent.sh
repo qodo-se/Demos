@@ -11,7 +11,6 @@ else
   exit 1
 fi
 
-
 PWD_START=$(pwd)
 PATH_POETRY_PROJECT=$(pwd)/boring-todo-api
 MODEL="gpt-4.1"
@@ -45,19 +44,19 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
 
   # skip __init__.py
   if [ "$filename" == "__init__.py" ]; then
-    echo "⏩ Skipping \`$filename\` — __init__.py"
+    echo "⏩ Skipping \`$filename\` — Init file"
     continue
   fi
 
   # skip if parent directory is tests
   if [[ "$file" == *"/tests/"* ]]; then
-    echo "⏩ Skipping \`$filename\` — test directory"
+    echo "⏩ Skipping \`$filename\` — Test file"
     continue
   fi
 
   # skip if file starts with test_
   if [[ "$filename" == test_* ]]; then
-    echo "⏩ Skipping \`$filename\` — test file"
+    echo "⏩ Skipping \`$filename\` — Test file"
     continue
   fi
   
@@ -74,6 +73,8 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
     rel_path=""
   else
     # ensure the directory exists in the tests folder
+    echo "📂 Creating \`$PATH_TESTS/$rel_path\`"
+    echo ""
     mkdir -p "$PATH_TESTS/$rel_path"
     rel_path="$rel_path/"
   fi
