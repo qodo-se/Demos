@@ -27,6 +27,7 @@ echo "Max iterations: $MAX_ITERATIONS"
 echo ""
 
 echo "🟪🟪 Starting Qodo Cover Agent"
+echo ""
 
 cd $PATH_POETRY_PROJECT
 
@@ -45,23 +46,29 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
   # skip __init__.py
   if [ "$filename" == "__init__.py" ]; then
     echo "⏩ Skipping $filename — __init__.py"
+    echo ""
     continue
   fi
 
   # skip if parent directory is tests
   if [[ "$file" == *"/tests/"* ]]; then
     echo "⏩ Skipping $filename — test directory"
+    echo ""
     continue
   fi
 
   # skip if file starts with test_
   if [[ "$filename" == test_* ]]; then
     echo "⏩ Skipping $filename — test file"
+    echo ""
     continue
   fi
   
   # get relative path from $PATH_SOURCES
   rel_path=$(dirname "${file#$PATH_SOURCES/}")
+
+  echo "🟪🟪 Reviewing $filename"
+  echo ""
   
   # if file is at the root of $PATH_SOURCES, rel_path will be empty
   if [ "$rel_path" = "." ]; then
@@ -87,7 +94,8 @@ find "$PATH_SOURCES" -type f -name "*.py" | while read -r file; do
     --test-file-path="$PATH_TEST_FILE" \
     --test-command="poetry run pytest" \
     --desired-coverage $DESIRED_COVERAGE \
-    --max-iterations $MAX_ITERATIONS
+    --max-iterations $MAX_ITERATIONS \
+    --additional-instructions="Always include docstrings"
 done
 
 echo ""
