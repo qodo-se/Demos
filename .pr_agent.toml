@@ -41,7 +41,7 @@
 # disable_auto_feedback = false
 # ai_timeout = 120 # 2 minutes
 # skip_keys = []
-response_language = "de-DE"
+# response_language = "en-US"
 
 # 🟪 patch extension logic
 # patch_extension_skip_types  = [".md",".txt"]
@@ -86,8 +86,7 @@ response_language = "de-DE"
 # require_security_review = true
 # require_ticket_analysis_review = true
 
-# 🟪 general options
-# persistent_comment = true
+
 extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # final_update_message = true
 
@@ -107,10 +106,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_description] # /describe #
-# publish_labels = false
-# add_original_user_description = true
-# generate_ai_title = false
-# use_bullet_points = true
+
 extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # enable_pr_type = true
 # final_update_message = true
@@ -149,11 +145,12 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_code_suggestions] # /improve #
+
+extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # max_context_tokens = 16000
 # commitable_code_suggestions = false
 # dual_publishing_score_threshold = -1 # -1 to disable, [0-10] to set the threshold (> = ) for publishing a code suggestion both in a table and as commitable
 # focus_only_on_problems = true
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # enable_help_text = false
 # enable_chat_text = false
 # persistent_comment = true
@@ -218,8 +215,9 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_update_changelog] # /update_changelog #
-# push_changelog_changes = false
+
 extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+# push_changelog_changes = false
 # add_pr_link = true
 # skip_ci_on_push = true
 
@@ -248,8 +246,8 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_improve_component] # /improve_component #
-# num_code_suggestions = 4
 extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+# num_code_suggestions = 4
 # file = ""              # in case there are several components with the same name, you can specify the relevant file
 # class_name = ""        # in case there are several methods with the same name in the same file, you can specify the relevant class name
 
@@ -466,9 +464,10 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [auto_best_practices]
+
+extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # enable_auto_best_practices = true # public - general flag to disable all auto best practices usage
 # utilize_auto_best_practices = true # public - disable usage of auto best practices in the 'improve' tool
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
 # content = ""
 # max_patterns = 5 # max number of patterns to be detected
 
