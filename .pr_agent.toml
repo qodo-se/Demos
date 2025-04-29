@@ -41,7 +41,7 @@
 # disable_auto_feedback = false
 # ai_timeout = 120 # 2 minutes
 # skip_keys = []
-# response_language = "en-US" # Language locales code for PR responses in ISO 3166 and ISO 639 format (e.g., "en-US", "it-IT", "zh-CN", ...)
+response_language = "de-DE"
 
 # 🟪 patch extension logic
 # patch_extension_skip_types  = [".md",".txt"]
