@@ -88,7 +88,7 @@
 
 # 🟪 general options
 # persistent_comment = true
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # final_update_message = true
 
 # 🟪 review labels
@@ -111,7 +111,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # add_original_user_description = true
 # generate_ai_title = false
 # use_bullet_points = true
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # enable_pr_type = true
 # final_update_message = true
 # enable_help_text = false
@@ -153,7 +153,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # commitable_code_suggestions = false
 # dual_publishing_score_threshold = -1 # -1 to disable, [0-10] to set the threshold (> = ) for publishing a code suggestion both in a table and as commitable
 # focus_only_on_problems = true
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # enable_help_text = false
 # enable_chat_text = false
 # persistent_comment = true
@@ -208,7 +208,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_add_docs] # /add_docs #
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # docs_style = "Sphinx" # "Google Style with Args, Returns, Attributes...etc", "Numpy Style", "Sphinx Style", "PEP257", "reStructuredText"
 # file = ""              # in case there are several components with the same name, you can specify the relevant file
 # class_name = ""        # in case there are several methods with the same name in the same file, you can specify the relevant class name
@@ -219,7 +219,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 
 [pr_update_changelog] # /update_changelog #
 # push_changelog_changes = false
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # add_pr_link = true
 # skip_ci_on_push = true
 
@@ -235,7 +235,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 # 🟪🟪🟪
 
 [pr_test] # /test #
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # testing_framework = "" # specify the testing framework you want to use
 # num_tests = 3            # number of tests to generate. max 5.
 # avoid_mocks = true       # if true, the generated tests will prefer to use real objects instead of mocks
@@ -249,7 +249,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 
 [pr_improve_component] # /improve_component #
 # num_code_suggestions = 4
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # file = ""              # in case there are several components with the same name, you can specify the relevant file
 # class_name = ""        # in case there are several methods with the same name in the same file, you can specify the relevant class name
 
@@ -468,7 +468,7 @@ extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-U
 [auto_best_practices]
 # enable_auto_best_practices = true # public - general flag to disable all auto best practices usage
 # utilize_auto_best_practices = true # public - disable usage of auto best practices in the 'improve' tool
-extra_instructions = "Use emojis. Be verbose. Repeat everything in English (en-US) and German (de-DE)"
+extra_instructions = "Speak German and English in your responses. Use emojis. Be verbose, and then include a ELI5 and a TLDR version of the response."
 # content = ""
 # max_patterns = 5 # max number of patterns to be detected
 
