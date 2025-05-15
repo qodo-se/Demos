@@ -4,8 +4,6 @@
 # 🟪🟪🟪
 
 [config]
-
-# 🟪 model
 model="gemini-2.5-pro"
 fallback_models = ["gpt-4.1"]
 # model_weak = "gpt-4o" # optional, a weaker model to use for some easier tasks
