@@ -20,8 +20,6 @@ demand_code_suggestions_self_review = true
 code_suggestions_self_review_text =  "**Author self-review**: I have reviewed the PR code suggestions, and addressed the relevant ones."
 allow_thumbs_up_down = true
 
-
-
 # # 🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪🟪
 # # 🟪🟪🟪 Config
 # # 🟪🟪🟪
