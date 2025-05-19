@@ -75,4 +75,7 @@
             }
         ]
     },
+    "settings": {
+        "codium.codeCompletion.enable": false
+    },
 }
