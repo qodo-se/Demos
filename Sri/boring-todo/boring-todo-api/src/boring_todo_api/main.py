@@ -8,7 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Support both common Next.js ports
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,11 +25,27 @@ class TodoItem(BaseModel):
 class TodoItemCreate(BaseModel):
     text: str
     completed: Optional[bool] = False
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "text": "Learn to sail the seven seas",
+                "completed": False
+            }
+        }
 
 
 class TodoItemUpdate(BaseModel):
     text: Optional[str] = None
     completed: Optional[bool] = None
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "text": "Updated task text",
+                "completed": True
+            }
+        }
 
 
 # In-memory database
@@ -60,7 +76,16 @@ async def get_item(
 # CREATE - Add a new item
 @app.post("/items", response_model=TodoItem, status_code=201)
 async def create_item(item: TodoItemCreate):
-    new_item = {"id": str(uuid.uuid4()), "text": item.text, "completed": item.completed}
+    # Validate text is not empty after trimming
+    text = item.text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Text cannot be empty, ye landlubber!")
+    
+    # Check for duplicates
+    if any(existing_item["text"] == text for existing_item in todo_items):
+        raise HTTPException(status_code=400, detail="Duplicate todo item, savvy!")
+    
+    new_item = {"id": str(uuid.uuid4()), "text": text, "completed": item.completed}
     todo_items.append(new_item)
     return new_item
 
@@ -74,11 +99,21 @@ async def update_item(
     for item in todo_items:
         if item["id"] == item_id:
             if item_update.text is not None:
-                item["text"] = item_update.text
+                # Validate text is not empty after trimming
+                text = item_update.text.strip()
+                if not text:
+                    raise HTTPException(status_code=400, detail="Text cannot be empty, ye scallywag!")
+                
+                # Check for duplicates (excluding current item)
+                if any(existing_item["text"] == text and existing_item["id"] != item_id 
+                       for existing_item in todo_items):
+                    raise HTTPException(status_code=400, detail="Duplicate todo item, arrr!")
+                
+                item["text"] = text
             if item_update.completed is not None:
                 item["completed"] = item_update.completed
             return item
-    raise HTTPException(status_code=404, detail="Item not found")
+    raise HTTPException(status_code=404, detail="Item not found, matey!")
 
 
 # DELETE - Remove an item
@@ -90,4 +125,4 @@ async def delete_item(
         if item["id"] == item_id:
             todo_items.pop(index)
             return
-    raise HTTPException(status_code=404, detail="Item not found")
+    raise HTTPException(status_code=404, detail="Item not found, ye scurvy dog!")
