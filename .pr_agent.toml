@@ -2,20 +2,28 @@
 model="gemini-2.5-pro"
 fallback_models = ["gpt-4.1"]
 
+[github_app]
+pr_commands = [
+    "/describe",
+    "/review",
+    "/improve",
+    "/analyze",
+    "/checks",
+    "/describe",
+]
+
 [pr_description]
-publish_labels = true
-add_original_user_description = true
+add_diagram = true
+enable_help_text = true
+enable_large_pr_handling = true
 generate_ai_title = true
-use_bullet_points = true
-extra_instructions = "Speak German and English in your responses. Use emojis. Always include ELI5 and TLDR sections. Optionally, generate simple architecture diagrams with mermaid and include them in a markdown block under the 'Description' section."
 
 [pr_reviewer]
+enable_help_text = true
+num_max_findings = 10
+require_score_review = true
 require_can_be_split_review = true
-extra_instructions = "Speak German and English in your responses. Use emojis."
+enable_review_labels_security = true
 
 [pr_code_suggestions]
-commitable_code_suggestions = false
-extra_instructions = "Speak German and English in your responses. Use emojis."
-demand_code_suggestions_self_review = true
-code_suggestions_self_review_text =  "**Author self-review**: I have reviewed the PR code suggestions, and addressed the relevant ones."
-allow_thumbs_up_down = true
+enable_help_text = true
