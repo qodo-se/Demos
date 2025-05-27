@@ -4,19 +4,23 @@ import { TodoItem } from "./todo-item-type";
 interface Props {
     dataSource: Array<TodoItem>;
     onSubmitted: (text: string) => void;
+    disabled?: boolean;
 }
 
 /**
  * A React component that renders an input field for adding new todo items.
  * 
- * @param dataSource - Array of existing todo items to che∏k for duplicates
+ * @param dataSource - Array of existing todo items to check for duplicates
  * @param onSubmitted - Callback function triggered when a valid todo item is submitted
+ * @param disabled - Whether the input should be disabled during loading
  * @returns Input element that handles todo item addition on Enter key press
  */
 export default function TodoItemAdd(
-    { dataSource, onSubmitted }: Props
+    { dataSource, onSubmitted, disabled = false }: Props
 ) {
     const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (disabled) return;
+        
         e.preventDefault();
         if (e.key === "Enter") {
             let text = (e.target as HTMLInputElement).value;
@@ -39,7 +43,8 @@ export default function TodoItemAdd(
             className={styles.todo_item_add}
             autoFocus
             type="text"
-            placeholder="create a new task"
+            placeholder={disabled ? "Loading... ⚓" : "create a new task"}
+            disabled={disabled}
             onKeyUp={e => onKeyUp(e)} />
     );
 }
