@@ -1,7 +1,6 @@
 {
     "folders": [
         {
-            "name": "sri/boing-todo",
             "path": "."
         }
     ],
@@ -10,7 +9,7 @@
         "tasks": [
             {
                 "label": "🟩 App :: Run",
-                "command": "./run-app.sh",
+                "command": "cd Sri/boring-todo/ && ./run-app.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -23,7 +22,7 @@
             },
             {
                 "label": "🟩🟩 App :: Test",
-                "command": "./test-app.sh",
+                "command": "cd Sri/boring-todo/ && ./test-app.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -36,7 +35,7 @@
             },
             {
                 "label": "🟦 Api :: Run",
-                "command": "./run-api.sh",
+                "command": "cd Sri/boring-todo/ && ./run-api.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -49,7 +48,7 @@
             },
             {
                 "label": "🟦🟦 Api :: Test",
-                "command": "./test-api.sh",
+                "command": "cd Sri/boring-todo/ && ./test-api.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
@@ -62,7 +61,7 @@
             },
             {
                 "label": "🟧🟧 E2E :: Playwright",
-                "command": "./test-e2e-playwright.sh",
+                "command": "cd Sri/boring-todo/ && ./test-e2e-playwright.sh",
                 "type": "shell",
                 "args": [],
                 "problemMatcher": [
