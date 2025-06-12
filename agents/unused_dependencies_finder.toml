@@ -1,0 +1,98 @@
+[commands.unused_dependencies_finder]
+description = "Analyze project dependencies and identify unused packages across multiple programming languages and package managers."
+
+instructions = """
+Your role is to find unused dependencies in software projects. Follow these steps:
+
+1. PREPARATION PHASE
+   - Scan the target directory to identify project types (package.json, requirements.txt, Gemfile, etc.)
+   - Determine which package managers and dependency files are present
+   - Create a list of all declared dependencies from configuration files
+
+2. ANALYSIS PHASE
+   - Parse all source code files to identify actual imports and usage patterns
+   - For Node.js projects: analyze require(), import statements, and dynamic imports
+   - For Python projects: analyze import statements, from imports, and __import__ calls
+   - For Ruby projects: analyze require, require_relative, and gem usage
+   - Cross-reference declared dependencies with actual usage in code
+   - Check for indirect usage through configuration files, scripts, and build tools
+
+3. DETECTION PHASE
+   - Compare declared dependencies against found usage patterns
+   - Identify dependencies that appear to be unused
+   - Check for common false positives (dev dependencies, peer dependencies, runtime-only deps)
+   - Validate findings by checking for usage in test files, configuration files, and build scripts
+   - Generate confidence scores for each unused dependency finding
+
+4. COMPLETION PHASE
+   - Generate a structured report of unused dependencies
+   - Provide recommendations for safe removal
+   - Include warnings about potential false positives
+   - Output summary statistics and next steps
+"""
+
+available_tools = ["filesystem", "shell"]
+
+arguments = [
+    { name = "target_directory", type = "string", required = true, description = "Directory path to analyze for unused dependencies" },
+    { name = "include_dev_dependencies", type = "boolean", required = false, description = "Whether to analyze development dependencies", default = true },
+    { name = "exclude_patterns", type = "string", required = false, description = "Comma-separated list of file patterns to exclude (e.g., '*.test.js,*.spec.py')", default = "" },
+    { name = "confidence_threshold", type = "number", required = false, description = "Minimum confidence score (0-1) to report a dependency as unused", default = 0.8 },
+    { name = "check_indirect_usage", type = "boolean", required = false, description = "Whether to check for indirect usage in config files and scripts", default = true }
+]
+
+output_schema = """
+{
+    "properties": {
+        "summary": {
+            "description": "Executive summary of the dependency analysis",
+            "title": "Summary",
+            "type": "string"
+        },
+        "project_info": {
+            "description": "Information about the analyzed project",
+            "title": "Project Information",
+            "type": "object",
+            "properties": {
+                "project_type": { "type": "string", "description": "Detected project type (e.g., 'Node.js', 'Python', 'Ruby')" },
+                "package_managers": { "type": "array", "items": { "type": "string" }, "description": "Detected package managers" },
+                "total_dependencies": { "type": "integer", "description": "Total number of declared dependencies" },
+                "files_analyzed": { "type": "integer", "description": "Number of source files analyzed" }
+            }
+        },
+        "unused_dependencies": {
+            "description": "List of potentially unused dependencies",
+            "title": "Unused Dependencies",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string", "description": "Dependency name" },
+                    "version": { "type": "string", "description": "Declared version" },
+                    "type": { "type": "string", "description": "Dependency type (production, development, peer)" },
+                    "confidence_score": { "type": "number", "description": "Confidence that this dependency is unused (0-1)" },
+                    "reason": { "type": "string", "description": "Explanation of why this dependency appears unused" },
+                    "potential_false_positive": { "type": "boolean", "description": "Whether this might be a false positive" }
+                }
+            }
+        },
+        "recommendations": {
+            "description": "Recommendations for dependency cleanup",
+            "title": "Recommendations",
+            "type": "array",
+            "items": { "type": "string" }
+        },
+        "warnings": {
+            "description": "Important warnings about the analysis",
+            "title": "Warnings",
+            "type": "array",
+            "items": { "type": "string" }
+        },
+        "success": {
+            "description": "Whether the analysis completed successfully",
+            "title": "Success",
+            "type": "boolean"
+        }
+    }
+}
+"""
