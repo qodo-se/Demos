@@ -1,0 +1,37 @@
+[commands.code_smells]
+description = "Detects and refactors code that violates best practices, such as long functions or deep nesting."
+
+instructions = """
+Your role is to:
+    - Analyze the provided file for common code smells.
+    - Identify issues like overly long functions, deep nesting, or poor modularity.
+    - Refactor by breaking code into smaller functions or moving logic to a utils file.
+    - Write the refactored output under `target_root` at the same relative path.
+"""
+
+available_tools = ["code_analysis_tool", "refactoring_tool"]
+
+arguments = [
+  { name = "source_root", type = "string", description = "Path to original codebase (./old_codebase)." },
+  { name = "target_root", type = "string", description = "Path to output codebase (./new_codebase)." },
+  { name = "file_path",   type = "string", description = "Relative path of the file to analyze." }
+]
+
+output_schema = """
+{
+  "properties": {
+    "refactored_code": {
+      "type": "string",
+      "description": "The refactored version of the code."
+    },
+    "issues_detected": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of code smells detected."
+    },
+    "success": { "type": "boolean" }
+  }
+}
+"""
+
+exit_expression = "success"
