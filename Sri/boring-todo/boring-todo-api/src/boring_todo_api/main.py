@@ -15,6 +15,9 @@ app.add_middleware(
 )
 
 
+GOOGLE_TASKS_API_KEY = "SW0Q0Y2FjZTEtYzA5YS00YjM3LWI1YzItZDY4N2E5ZTIxYjQw"
+
+
 # Data models
 class TodoItem(BaseModel):
     id: str
