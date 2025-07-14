@@ -3,75 +3,9 @@ version = "1.0"
 [commands.grug_brained_minimalist_planner]
 description = "Inspired by 'The Grug Brained Developer', this agent plans tasks with a focus on minimalism and efficiency."
 instructions = """
-The Grug Brained Developer principles are:
+You will create a migration plan based on The Grug Brained Developer principles.
 
-⸻
-
-🧠 TL;DR
-
-Avoid complexity - it's the real enemy. 
-
-Learn to say No, compromise with Ok + 80/20, delay abstractions until they're needed, balance testing (integration > unit > E2E), employ small refactors, respect legacy, master tools, and keep things pragmatically simple.
-
-⸻
-
-1. Complexity Is the Demon
-	•	Complexity rarely appears at once - it creeps in, making systems brittle and unpredictable.
-	•	You don't always see it, but you feel it when unrelated changes break things.
-
-2. Say “No” to Unnecessary Features
-	•	The most potent tool against complexity is “No.”
-	•	Politely declining unneeded features or abstractions helps maintain simplicity.
-
-3. Say “Ok” with an 80/20 Mindset
-	•	When you must proceed, build the minimum viable version - 80% of value with 20% of effort.
-	•	Often, managers don't notice the missing 20% - and you avoid unnecessary complexity.
-
-4. Delay Abstraction - Wait for “Cut Points”
-	•	Don't abstract too early; wait until natural boundaries emerge in your code.
-	•	Refactor along those lines. Early abstractions introduce fragility.
-
-5. Pragmatic Testing
-	•	Skip test-first mandates; start writing tests after prototyping.
-	•	Favor integration tests (sweet spot) over brittle unit tests or all-consuming end-to-end tests.
-	•	Write unit tests early, but don't cling to them; maintain a few strategic end-to-end “smoke” tests.
-
-6. Agile ≠ Silver Bullet
-	•	Agile practices can help - if used sensibly.
-	•	Don't mistake process for progress: prioritize prototyping, tooling, and skilled developers.
-
-7. Refactor Small & Incrementally
-	•	Big refactors and heavy abstractions summon complexity.
-	•	Break changes into small, test-backed steps.
-
-8. Respect Legacy (Chesterton's Fence)
-	•	Don't delete code you don't understand.
-	•	Old structures often exist for a reason - learn before refactoring.
-
-9. Master Your Tools
-	•	IDEs, debuggers, structured logging - use them well.
-	•	Good logs (“clubs to whack bugs”) can dramatically simplify debugging and daily life.
-
-10. Keep Expressions Readable
-	•	Avoid cryptic one liners and overused closures/generics.
-	•	Clarity often outweighs “DRY” purity - sometimes duplication is more maintainable.
-
-11. Simple Concurrency & API Design
-	•	Prefer simple stateless services and easy-to-use APIs.
-	•	Avoid overcomplicated concurrency schemes or overly abstracted interfaces.
-
-12. Beware Fads & Senior Imposter Syndrome
-	•	Front-end fads, microservices, fancy patterns often inject needless complexity.
-	•	Leaders should admit confusion to model healthy team culture.
-
-⸻
-
-Final Thoughts
-	•	The Grug mindset is about simplicity, pragmatism, and self-awareness.
-	•	Key rituals:
-	•	Demon-watch: constantly sense and resist complexity.
-	•	No/Ok+80/20: choose simplicity or the minimal viable path.
-	•	Delay abstraction, test sensibly, refactor small, master your environment, and keep it human.
+Avoid complexity - it's the real enemy.
 """
 
 # Optional: Define arguments
@@ -90,7 +24,7 @@ mcpServers = """
 tools = ["filesystem", "git", "shell"]
 
 # Optional: Define execution strategy: "plan" for multi-step, "act" for direct execution
-execution_strategy = "plan"
+execution_strategy = "act"
 
 # Optional: Define expected output structure
 output_schema = """
