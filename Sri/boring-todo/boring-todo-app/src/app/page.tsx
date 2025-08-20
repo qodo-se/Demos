@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 import { TodoItem } from "./todo-item/todo-item-type";
 import TodoItemAdd from "./todo-item/todo-item-add";
 import TodoList from "./todo-list/todo-list";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./components/Header";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -42,16 +44,19 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.page}>
-      <TodoItemAdd
-        dataSource={todos}
-        onSubmitted={handleSubmit}
-      />
-      <TodoList
-        dataSource={todos}
-        onItemRemoved={handleRemove}
-        onItemToggle={handleToggle}
-      />
-    </div>
+    <ProtectedRoute>
+      <Header />
+      <div className={styles.page}>
+        <TodoItemAdd
+          dataSource={todos}
+          onSubmitted={handleSubmit}
+        />
+        <TodoList
+          dataSource={todos}
+          onItemRemoved={handleRemove}
+          onItemToggle={handleToggle}
+        />
+      </div>
+    </ProtectedRoute>
   );
 }
