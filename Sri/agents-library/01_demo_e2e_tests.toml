@@ -1,0 +1,108 @@
+version = "1.0"
+
+[commands.01_demo_e2e_tests]
+description = "Generates E2E and API tests"
+instructions = """
+Follow the steps to generate E2E tests.
+
+## Pre-requisites
+
+1. Sources of the frontend app to be found at `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/boring-todo-app`
+2. Web application must be running at `http://localhost:3001`
+3. API docs must be available at `http://localhost:8000`
+
+Abort if pre-requisites are not met. Do not attempt to start the services.
+
+## Step 1: API Test Plan
+
+Browse the API docs. For testing the API, prepare a test plan.
+
+Identify test scenarios. For each scenario, define:
+
+a. Success Criteria
+b. Failure Criteria
+c. Edge cases
+
+Generate a markdown file called `test-plan.md` under `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-api-tests`.
+
+Create missing files and folders, if needed.
+
+## Step 2: API Tests
+
+Generate API tests under `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-api-tests` based on `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-api-tests/test-plan.md`.
+
+Use Python 3. Use pytest, requests and any other major Python testing libraries or frameworks that are relevant.
+
+## Step 3: UI Test Plan
+
+Browse the web application. If you need to log in, use the credentials `demo@demo.demo` and `demo`.
+
+After login, inspect all the capabilities of the web applications.
+
+Based on the web application capabilitirs, prepare a test plan.
+
+Identify test scenarios. For each scenario, define:
+
+a. Success Criteria
+b. Failure Criteria
+c. Edge cases
+
+Generate a markdown file called `test-plan.md` under `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-ui-tests`.
+
+Create missing files and folders, if needed.
+
+## Step 4: Web Application Tests Preparation
+
+Update the web application to include `data-test-id` attributes, if missing.
+
+## Step 5: UI Tests
+
+Generate UI tests under `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-ui-tests`.
+
+Use Python 3, Playwright, Pytest and other relevant Python libraries and frameworks.
+
+Create a `pages` folder to hold **Page Objects** (one file per page: LoginPage, etc.).
+
+Create subfolders for `smoke`, `auth`, `core`, and `regression` tests.
+
+Then implement the tests from `/Users/sri/Work/Qodo/Demos/Sri/boring-todo/generated-ui-tests/test-plan.md`
+
+Always start tests with **“Given / When / Then” style** comments or steps.  
+
+Use **data-test IDs** for selectors; ask frontend team to add them if missing.  
+
+Keep each test focused on a single main outcome.  
+
+Reuse login/session state with a fixture — don’t repeat the login UI flow everywhere.  
+
+Avoid arbitrary waits; always wait for a meaningful element or response.
+"""
+
+mcpServers = """
+{
+    "Playwright": {
+        "command": "npx",
+        "args": [
+            "-y",
+            "@playwright/mcp@latest"
+        ]
+    },
+    "Context7": {
+        "url": "https://mcp.context7.com/mcp"
+    },
+}
+"""
+
+tools = ["filesystem", "git", "shell"]
+
+execution_strategy = "act"
+
+output_schema = """
+{
+    "properties": {
+        "success": {"type": "boolean", "description": "Was it successful?"}
+    }
+}
+"""
+
+exit_expression = "success"
