@@ -1,0 +1,36 @@
+version = "1.0"
+
+[commands.01_demo_e2e_tests]
+description = "Verifies compliance adherence"
+instructions = """
+Step 1: Selecting the correct git diff for the review:
+
+If this is the `main` branch, perform a review of the diff between HEAD and the last 10 commits.
+
+If it is not the main branch, perform a review of the diff between current branch and the main branch.
+
+Step 2: Review the `pr_compliance_checklist.soc2type2.yaml`, for each item in the `pr_compliances` list from the yaml, review the review diff. 
+
+If the item's success_criteria met, list the rule prefixed with a checkmark emoji. 
+
+If the item's failure_criteria is met,  list the rule prefixed with an error emoji, then give a TLDR explanation, and a possible fix if possible
+"""
+
+mcpServers = """
+{
+}
+"""
+
+tools = ["filesystem", "git", "shell"]
+
+execution_strategy = "act"
+
+output_schema = """
+{
+    "properties": {
+        "success": {"type": "boolean", "description": "Was it compliance?"}
+    }
+}
+"""
+
+exit_expression = "success"
