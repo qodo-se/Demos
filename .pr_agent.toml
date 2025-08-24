@@ -1,0 +1,62 @@
+[config]
+model="gemini-2.5-pro"
+fallback_models = ["gpt-5"]
+
+[pr_description]
+enable_pr_diagram = true
+enable_help_text = true
+enable_large_pr_handling = true
+generate_ai_title = true
+extra_instructions = ""
+
+[pr_reviewer]
+enable_help_text = true
+num_max_findings = 10
+require_todo_scan=true
+require_score_review = true
+require_can_be_split_review = true
+enable_review_labels_security = true
+extra_instructions = ""
+
+[pr_code_suggestions]
+enable_help_text = true
+demand_code_suggestions_self_review = true
+
+[github_app]
+pr_commands = [
+    "/describe",
+    "/compliance",
+    "/improve",
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+]
+
+[gitlab]
+pr_commands = [
+    "/describe",
+    "/compliance",
+    "/improve",
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+]
+
+[bitbucket_app]
+pr_commands = [
+    "/describe",
+    "/compliance",
+    "/improve",
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
+    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+]
