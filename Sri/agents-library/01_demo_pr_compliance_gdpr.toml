@@ -28,7 +28,7 @@ execution_strategy = "act"
 output_schema = """
 {
     "properties": {
-        "success": {"type": "boolean", "description": "Was it compliance?"}
+        "success": {"type": "boolean", "description": "Was it compliant?"}
     }
 }
 """
