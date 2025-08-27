@@ -23,7 +23,7 @@ export default function Header() {
         <h1 className={styles.title}>Boring Todo App</h1>
         <div className={styles.userInfo}>
           <span className={styles.username}>Welcome, {user.username}!</span>
-          <button onClick={handleLogout} className={styles.logoutButton}>
+          <button onClick={handleLogout} className={styles.logoutButton} data-testid="logout-button">
             Logout
           </button>
         </div>
