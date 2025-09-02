@@ -5,4 +5,4 @@ cd /Users/sri/Work/Qodo/github-codium-ai/codium-ai-vscode
 git pull
 
 # run agent
-qodo --yes --agent-file=/Users/sri/Work/Qodo/Demos/Sri/agents-library/01_demo_weekly_review.toml
+qodo --yes --agent-file=/Users/sri/Work/Qodo/Demos/Sri/agents-library/01_demo_report_generation.toml

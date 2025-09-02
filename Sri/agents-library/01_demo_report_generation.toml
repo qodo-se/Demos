@@ -1,6 +1,6 @@
 version = "1.0"
 
-[commands.01_demo_e2e_tests]
+[commands.01_demo_report_generation]
 description = "Generates E2E and API tests"
 instructions = """
 
