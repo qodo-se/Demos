@@ -1,0 +1,124 @@
+version = "1.0"
+
+[commands.01_demo_e2e_tests]
+description = "Generates E2E and API tests"
+instructions = """
+
+# Pre-requisites
+
+Abort if any of the following pre-requisites is not met:
+
+- This must be a Git repo
+- This must have a history greater than 30 days old
+
+# Steps
+
+## Step 1: Fetch commits
+
+Fetch all the commits made in the `main` branch of this Git repository over the last 30 days.
+
+## Step 2: Metrics
+
+For the fetched commits, compile the following metrics:
+- Total commits
+- Average commits per week
+- Top contributors
+
+## Step 3: Top contributors
+
+For the fetched commits, compile a list of the contributors.
+
+Prepare a ranked list.
+
+## Step 4: Architecture Review
+
+For the fetched commits, perform an architecture review.
+
+Prepare a list of findings and recommendations.
+
+## Step 5: Code Quality
+
+For the fetched commits, perform a code quality review.
+
+Prepare a list of findings and recommendations.
+
+## Step 6: Technical Debt
+
+For the fetched commits, perform a technical debt review.
+
+Prepare a list of findings and recommendations.
+
+## Step 7: Security
+
+For the fetched commits, perform a security review.
+
+Prepare a list of findings and recommendations.
+
+## Step 8: Performance
+
+For the fetched commits, perform a performance review.
+
+Prepare a list of findings and recommendations.
+
+## Step 9: Documentation
+
+For the fetched commits, perform a documentation review.
+
+Prepare a list of findings and recommendations.
+
+## Step 10: Testing
+
+For the fetched commits, perform a testing review.
+
+Prepare a list of findings and recommendations.
+
+## Step 11: Highlights
+
+Summarize the findings and recommendations.
+
+# Final Output
+
+Prepare a markdown report of all the findings.
+
+Use emojis.
+
+Be cheerful.
+
+Highlights must be concise, everything else need not be concise.
+
+Structure of the report:
+- Highlights
+- Metrics
+- Top contributors
+- Architecture review
+- Code quality
+- Technical debt
+- Security
+- Performance
+- Documentation
+- Testing
+
+Save this report as a markdown file in the folder `/tmp`.
+
+File name format must be `YYYY-MM-DD-30-day-report-qodo-gen-vscode.md`
+"""
+
+mcpServers = """
+{
+
+}
+"""
+
+tools = ["filesystem", "git", "shell"]
+
+execution_strategy = "act"
+
+output_schema = """
+{
+    "properties": {
+        "success": {"type": "boolean", "description": "Was it successful?"}
+    }
+}
+"""
+
+exit_expression = "success"
