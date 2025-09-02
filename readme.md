@@ -4,13 +4,21 @@ Demos for Qodo SEs
 
 ## Agent Execution
 
-1. E2E & API Test Gen
+### E2E & API Test Gen
 
 ```bash
 qodo --agent-file=./Sri/agents-library/01_demo_e2e_tests.toml --yes --ci
 ```
 
-1. Compliance
+### Report Generation
+
+```bash
+# Report generation on Qodo Gen VSCode extension repository
+git checkout 2025-09-demo-report-for-software-project
+./Sri/agents-demo/qodo-gen-vscode-report.sh
+```
+
+### Compliance
 
 ```bash
 # All
