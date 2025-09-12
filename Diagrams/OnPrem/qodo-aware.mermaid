@@ -1,0 +1,60 @@
+flowchart TB
+  %% External dependencies
+  subgraph External
+    GP[Git Providers<br/>GitHub / GitLab / Bitbucket DC]
+    LLM[Model Gateway<br/> - gpt-5, claude-4.1-opius]
+    MCPClients[Non-Qodo MCP Clients<br/> - optional]
+    QMerge[Qodo Merge / Qodo Gen]
+  end
+
+  %% Data layer
+  subgraph Data Layer
+    PG[(PostgreSQL 17<br/>pgvector enabled<br/>TCP 5432)]
+    subgraph PGDBs[PostgreSQL Databases]
+      RAGDB[(rag-indexer DB)]
+      METADB[(metadata DB)]
+    end
+    PG --- RAGDB
+    PG --- METADB
+  end
+
+  %% Kubernetes namespace
+  subgraph K8s[Your Kubernetes Cluster<br/>single namespace recommended]
+    direction TB
+
+    subgraph Secrets[Secrets & Config]
+      QS[(qodo-aware-secrets Secret)]
+      CM1[(ConfigMaps)]
+    end
+
+    MSvc[metadata-service<br/>NodePort 8000]
+    IDX[rag-indexer<br/>NodePort 3000<br/>+ CronJob: reindex]
+    CR[context-retriever<br/>NodePort 8001]
+    CRMCP[context-retriever-mcp<br/>Ingress /mcp<br/>NodePort 8001<br/>optional]
+
+    %% mounts
+    QS --> MSvc
+    QS --> IDX
+    QS --> CR
+    QS --> CRMCP
+    CM1 --> CR
+    CM1 --> CRMCP
+  end
+
+  %% Flows
+  GP -- clone/list/repos --> IDX
+  IDX -- embeddings + chunks --> RAGDB
+  MSvc -- repo/org metadata --> METADB
+
+  CR -- retrieve context --> RAGDB
+  CR -- read metadata --> METADB
+  CR -- context API (8001) --> QMerge
+
+  CRMCP -- MCP server (/mcp) --> MCPClients
+
+  %% Model dependency (outbound)
+  CR -.-> LLM
+  IDX -.-> LLM
+
+  %% Admin ops
+  Admin[Admin/Helm] -->|Install order:<br/>1 metadata-service<br/>2 rag-indexer<br/>3 context-retriever<br/>4 context-retriever-mcp| K8s

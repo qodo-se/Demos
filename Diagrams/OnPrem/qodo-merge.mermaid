@@ -1,0 +1,42 @@
+flowchart TB
+  subgraph Dev[Development Workflow]
+    PR[Pull Request Event]
+    CommentCMD["/review, /describe" comment]
+    MergeBot[Qodo Merge Bot - Git webhook]
+  end
+
+  subgraph K8s[Your Kubernetes Cluster]
+    subgraph Agent[Qodo Merge Backend - pr_agent]
+      Webhook[Webhook / PR listener]
+      RequestHandler[Request processing & tool orchestration]
+      LLMgateway[LLM Gateway - external]
+      AwareSvc[Context Retrieval - optional, via Qodo Aware service]
+      Analytics[Analytics sidecar or sink]
+    end
+
+    Ingress[Ingress / LoadBalancer]
+    SecretStore[.secrets.toml secret or external secret backend]
+    ConfigMap[ConfigMaps - env, feature flags]
+  end
+
+  subgraph GitProv[Git Provider]
+    GitHub[GitHub or GitLab, Bitbucket]
+  end
+
+  PR -->|webhook event| MergeBot
+  CommentCMD -.-> MergeBot
+
+  MergeBot --> Webhook
+  Webhook --> RequestHandler
+
+  RequestHandler -->|context if RAG enabled| AwareSvc
+  RequestHandler -->|prompt & instructions| LLMgateway
+  RequestHandler -->|post back to PR| GitProv
+
+  Agent --> Analytics
+
+  Ingress --> MergeBot
+  SecretStore --> Agent
+  ConfigMap --> Agent
+
+  Admin[Cluster Admin / Helm] -->|helm upgrade/install| Agent

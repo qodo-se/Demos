@@ -1,0 +1,36 @@
+flowchart TB
+  %% Clients
+  subgraph IDEs[Developer IDEs]
+    VS[VS Code Extension]
+    JB[JetBrains Plugin]
+  end
+
+  %% Platform
+  subgraph Platform[Kubernetes or Embedded Cluster, Replicated]
+    direction TB
+
+    subgraph QGen[Qodo Gen Backend]
+      API[Gen API / Services]
+      Jobs[Helm Jobs:<br/>• db-migration - alembic<br/>• db-partition-create-init]
+      Crons[CronJobs:<br/>• db-partition-create - daily 01:00<br/>• db-partition-delete - daily 01:00]
+      Flags[Feature Flags via Secret/env:<br/>agentic_support<br/>lean_agent_enabled<br/>custom_mcp_enabled<br/>apply_flow_on<br/>test_flow_on<br/>langgraph_checkpointer=postgres]
+    end
+
+    Admin[Cluster Admin / Helm<br/>or Replicated Admin UI]
+  end
+
+  %% Data layer
+  subgraph Data[Data Layer]
+    PG[(PostgreSQL 17+<br/>agentic DB<br/>TCP 5432)]
+  end
+
+  %% Flows
+  VS -->|chat, tasks, tool calls| API
+  JB -->|chat, tasks, tool calls| API
+
+  API -->|read/write| PG
+  Jobs -->|migrations/partition init| PG
+  Crons -->|daily maintenance| PG
+
+  Admin -->|Helm upgrade/values<br/>OR Replicated config & license| Platform
+  Flags --> API
