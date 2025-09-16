@@ -5,6 +5,9 @@
         },
         {
             "path": "../../../.qodo"
+        },
+        {
+            "path": "../github-codium-ai"
         }
     ],
     "tasks": {
