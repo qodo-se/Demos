@@ -47,12 +47,13 @@ export default function Login() {
             <input
               type="email"
               id="email"
-              name="email"
+name="email"
               value={formData.email}
               onChange={handleInputChange}
               required
               placeholder="Enter your email"
               className={styles.input}
+              data-test-id="email-input"
             />
           </div>
 
@@ -67,6 +68,7 @@ export default function Login() {
               required
               placeholder="Enter your password"
               className={styles.input}
+              data-test-id="password-input"
             />
           </div>
 
@@ -76,6 +78,7 @@ export default function Login() {
             type="submit" 
             disabled={isLoading || !formData.email || !formData.password}
             className={styles.submitButton}
+            data-test-id="login-button"
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>
