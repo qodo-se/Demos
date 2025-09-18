@@ -26,6 +26,7 @@ def test_delete_todo_item(logged_in_page: Page):
     # Given the user is logged in and has a todo item
     main_page = MainPage(logged_in_page)
     main_page.create_task("Task to delete")
+    expect(main_page.get_task(0)).to_be_visible()
 
     # When the user clicks the delete button
     main_page.delete_task(0)
