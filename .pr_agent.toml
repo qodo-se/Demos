@@ -19,6 +19,11 @@ check_pr_additional_content = true
 [pr_code_suggestions]
 enable_help_text = true
 demand_code_suggestions_self_review = true
+# # Recipe for maximum suggestion comprehensiveness
+# suggestions_depth = "exhaustive"
+# enable_suggestion_type_reuse = true
+# num_code_suggestions_per_chunk = 100
+# num_best_practice_suggestions = 100
 
 [github_app]
 pr_commands = [
