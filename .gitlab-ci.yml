@@ -25,8 +25,8 @@ check-prohibited-label:
       LABELS=$(echo "$MR_RESPONSE" | jq -r '.labels[]?' 2>/dev/null || echo "")
       
       # Check if the prohibited label exists
-      if echo "$LABELS" | grep -q "^lololol$"; then
-        echo "lololol"
+      if echo "$LABELS" | grep -q "^Failed compliance check$"; then
+        echo "Failed compliance check"
         exit 1
       else
         echo "✅ No prohibited labels found. Pipeline can proceed."
