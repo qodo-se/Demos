@@ -1,0 +1,33 @@
+stages:
+  - validate
+
+check-prohibited-label:
+  stage: validate
+  image: alpine:latest
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  before_script:
+    - apk add --no-cache curl jq
+  script:
+    - echo "Checking merge request labels..."
+    - |
+      # Fetch merge request details using GitLab API
+      MR_RESPONSE=$(curl --silent --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" \
+        "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID")
+      
+      # Check if API call was successful
+      if [ $? -ne 0 ]; then
+        echo "Failed to fetch merge request details"
+        exit 1
+      fi
+      
+      # Extract labels from the response
+      LABELS=$(echo "$MR_RESPONSE" | jq -r '.labels[]?' 2>/dev/null || echo "")
+      
+      # Check if the prohibited label exists
+      if echo "$LABELS" | grep -q "^lololol$"; then
+        echo "lololol"
+        exit 1
+      else
+        echo "✅ No prohibited labels found. Pipeline can proceed."
+      fi
