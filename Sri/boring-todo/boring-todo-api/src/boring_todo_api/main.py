@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException, Path, Body
+from fastapi import FastAPI, HTTPException, Path, Body, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import uuid
+import random
 
 app = FastAPI()
 
@@ -91,3 +92,35 @@ async def delete_item(
             todo_items.pop(index)
             return
     raise HTTPException(status_code=404, detail="Item not found")
+
+
+# Weather data model
+class WeatherResponse(BaseModel):
+    location: str
+    temperature: float
+    description: str
+    humidity: int
+    wind_speed: float
+
+
+# Weather endpoint
+@app.get("/weather", response_model=WeatherResponse)
+async def get_weather(
+    location: str = Query(..., description="The location to get weather for")
+):
+    """
+    Get weather information for a specified location.
+    This is a mock implementation that returns simulated weather data.
+    """
+    # Mock weather data - in a real implementation, this would call an external weather API
+    weather_conditions = ["Sunny", "Cloudy", "Rainy", "Partly Cloudy", "Overcast"]
+    
+    mock_weather = WeatherResponse(
+        location=location,
+        temperature=round(random.uniform(15.0, 35.0), 1),
+        description=random.choice(weather_conditions),
+        humidity=random.randint(30, 90),
+        wind_speed=round(random.uniform(0.0, 25.0), 1)
+    )
+    
+    return mock_weather
