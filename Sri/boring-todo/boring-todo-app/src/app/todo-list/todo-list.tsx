@@ -3,20 +3,20 @@ import { TodoItem } from "../todo-item/todo-item-type";
 
 interface Props {
     dataSource: Array<TodoItem>;
-    onItemRemoved: (index: number) => void;
-    onItemToggle: (index: number) => void;
+    onItemRemoved: (id: string) => void;
+    onItemToggle: (id: string) => void;
 }
 
 export default function TodoList(
     { dataSource, onItemRemoved, onItemToggle }: Props
 ) {
-    const listItems = dataSource.map((item, index) => {
+    const listItems = dataSource.map((item) => {
         const classNames = ["todo_list_item", styles.todo_list_item];
         let deleteLink = (
             <a
                 className={[styles.todo_list_item_delete, "todo_list_item_delete"].join(" ")}
-                data-testid={`todo_list_item_delete_${index}`}
-                onClick={() => onItemRemoved(index)}>
+                data-testid={`todo_list_item_delete_${item.id}`}
+                onClick={() => onItemRemoved(item.id)}>
                 🗑️
             </a>);
         if (item.completed) {
@@ -26,11 +26,11 @@ export default function TodoList(
 
         return (
             <li className={classNames.join(" ")}
-                key={index}>
+                key={item.id}>
                 <span
                     className="todo_list_item_text"
-                    data-testid={`todo_list_item_text_${index}`}
-                    onClick={() => onItemToggle(index)}>{item.text}</span>
+                    data-testid={`todo_list_item_text_${item.id}`}
+                    onClick={() => onItemToggle(item.id)}>{item.text}</span>
                 {deleteLink}
             </li>
         );
