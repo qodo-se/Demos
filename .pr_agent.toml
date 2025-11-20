@@ -1,6 +1,7 @@
 [config]
 model="gemini-2.5-pro"
 fallback_models = ["gpt-5"]
+response_language = "jp-JP"
 
 [pr_description]
 enable_pr_diagram = true
