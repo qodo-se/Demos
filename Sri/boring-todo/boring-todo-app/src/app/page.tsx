@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await fetch("http://localhost:8000/items");
+        const response = await fetch(`${API_URL}/items`);
         const data = await response.json();
         setTodos(data);
       } catch (error) {
@@ -23,22 +24,65 @@ export default function Home() {
     fetchTodos();
   }, []);
 
-  const handleSubmit = (text: string) => {
-    const newTodo: TodoItem = { text, completed: false };
-    setTodos([newTodo, ...todos]);
-  };
-
-  const handleRemove = (index: number) => {
-    setTodos(todos.filter((_, i) => i !== index));
-  };
-
-  const handleToggle = (index: number) => {
-    setTodos(todos.map((item, i) => {
-      if (i === index) {
-        return { ...item, completed: !item.completed };
+  const handleSubmit = async (text: string) => {
+    try {
+      const response = await fetch(`${API_URL}/items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text, completed: false }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to create todo");
       }
-      return item;
-    }));
+      
+      const newTodo: TodoItem = await response.json();
+      setTodos([newTodo, ...todos]);
+    } catch (error) {
+      console.error("Error creating todo:", error);
+    }
+  };
+
+  const handleRemove = async (id: string) => {
+    try {
+      const response = await fetch(`${API_URL}/items/${id}`, {
+        method: "DELETE",
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to delete todo");
+      }
+      
+      setTodos(todos.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting todo:", error);
+    }
+  };
+
+  const handleToggle = async (id: string) => {
+    const todoToToggle = todos.find((item) => item.id === id);
+    if (!todoToToggle) return;
+    
+    try {
+      const response = await fetch(`${API_URL}/items/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ completed: !todoToToggle.completed }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to update todo");
+      }
+      
+      const updatedTodo: TodoItem = await response.json();
+      setTodos(todos.map((item) => (item.id === id ? updatedTodo : item)));
+    } catch (error) {
+      console.error("Error updating todo:", error);
+    }
   };
 
   return (
