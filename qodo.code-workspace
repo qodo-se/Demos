@@ -5,18 +5,6 @@
             "path": "."
         },
         {
-            "name": "codebaseintel-backend",
-            "path": "../codebaseintel-backend"
-        },
-        {
-            "name": "codebaseintel-frontend",
-            "path": "../codebaseintel-frontend"
-        },
-        {
-            "name": "codebaseintel-public",
-            "path": "../codebaseintel-public"
-        },
-        {
             "name": ".qodo",
             "path": "../../../.qodo"
         }
