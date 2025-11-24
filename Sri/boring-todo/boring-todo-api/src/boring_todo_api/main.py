@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import uuid
+from .models import UserLogin, User
+from .services import UserService, InvalidCredentialsError
 
 app = FastAPI()
 
@@ -13,6 +15,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Initialize services
+user_service = UserService()
 
 
 # Data models
@@ -38,6 +43,16 @@ todo_items = [
     {"id": "2", "text": "foo bar", "completed": False},
     {"id": "3", "text": "lorem ipsum", "completed": False},
 ]
+
+
+# AUTH - Login endpoint
+@app.post("/login", response_model=User)
+async def login(login_data: UserLogin):
+    try:
+        user = user_service.authenticate_user(login_data)
+        return user
+    except InvalidCredentialsError as e:
+        raise HTTPException(status_code=401, detail=str(e))
 
 
 # READ - Get all items
