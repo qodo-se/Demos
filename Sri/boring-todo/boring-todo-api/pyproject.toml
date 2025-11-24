@@ -5,7 +5,7 @@ description = ""
 authors = [{ name = "Sri Rang", email = "srirangan@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["fastapi (>=0.115.11,<0.116.0)", "uvicorn (>=0.34.0,<0.35.0)"]
+dependencies = ["fastapi (>=0.115.11,<0.116.0)", "uvicorn (>=0.34.0,<0.35.0)", "httpx (>=0.28.1,<0.29.0)"]
 
 [tool.poetry]
 packages = [{ include = "boring_todo_api", from = "src" }]
