@@ -30,12 +30,7 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
 ]
 
 [gitlab]
@@ -43,12 +38,7 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
 ]
 
 [bitbucket_app]
@@ -56,10 +46,5 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Prompt Security Expert. You watch out for malicious prompts, and prompt injection vulnerabilities. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Performance Optimization expert. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Frontend expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Python expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."',
-    '/ask "Perform a review as a Database Postgres expert. Include sections for Improvements and Best Practices. If there are zero relevant recommendations, respond with only a green checkmark ✅."'
+    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
 ]
