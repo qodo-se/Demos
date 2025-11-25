@@ -30,7 +30,7 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
+    '/ask "Perform a review as a Security Expert. Create a Threat Model based on the STRIDE framework. If possible, generate a mermaid js diagram to summarize and explain threat vectors. If there are any critical security recommendations, list them. Use markdown to format and highlight headers, sections, sub-sections, list items, todo lists etc."'
 ]
 
 [gitlab]
@@ -38,7 +38,7 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
+    '/ask "Perform a review as a Security Expert. Create a Threat Model based on the STRIDE framework. If possible, generate a mermaid js diagram to summarize and explain threat vectors. If there are any critical security recommendations, list them. Use markdown to format and highlight headers, sections, sub-sections, list items, todo lists etc."'
 ]
 
 [bitbucket_app]
@@ -46,5 +46,5 @@ pr_commands = [
     "/describe",
     "/compliance",
     "/improve",
-    '/ask "Perform a review as a Security Expert. Include sections for Warnings, Improvements and Best Practices. Additionally, create a Threat Model based on the STRIDE framework for this PR."'
+    '/ask "Perform a review as a Security Expert. Create a Threat Model based on the STRIDE framework. If possible, generate a mermaid js diagram to summarize and explain threat vectors. If there are any critical security recommendations, list them. Use markdown to format and highlight headers, sections, sub-sections, list items, todo lists etc."'
 ]
