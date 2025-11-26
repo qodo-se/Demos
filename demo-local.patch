@@ -1,0 +1,97 @@
+diff --git a/backend/src/chat/chat.gateway.ts b/backend/src/chat/chat.gateway.ts
+index c84018e..9ea1785 100644
+--- a/backend/src/chat/chat.gateway.ts
++++ b/backend/src/chat/chat.gateway.ts
+@@ -91,8 +91,25 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+   ) {
+     const { roomId, username, content } = payload;
+ 
++    // Validation
++    if (!content || typeof content !== 'string') {
++      client.emit('error', { message: 'Message content is required' });
++      return;
++    }
++
++    const trimmedContent = content.trim();
++    if (trimmedContent.length === 0) {
++      client.emit('error', { message: 'Message cannot be empty' });
++      return;
++    }
++
++    if (trimmedContent.length > 1000) {
++      client.emit('error', { message: 'Message too long (max 1000 characters)' });
++      return;
++    }
++
+     // Save message to database
+-    const message = await this.roomService.createMessage(roomId, username, content);
++    const message = await this.roomService.createMessage(roomId, username, trimmedContent);
+ 
+     // Broadcast to all users in the room (including sender)
+     this.server.to(roomId).emit('newMessage', {
+diff --git a/frontend/src/components/ChatRoom.tsx b/frontend/src/components/ChatRoom.tsx
+index 94e8884..3cbd392 100644
+--- a/frontend/src/components/ChatRoom.tsx
++++ b/frontend/src/components/ChatRoom.tsx
+@@ -14,6 +14,8 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+   const [newMessage, setNewMessage] = useState('')
+   const [socket, setSocket] = useState<Socket | null>(null)
+   const [isTyping, setIsTyping] = useState<{ [key: string]: boolean }>({})
++  const [isLoading, setIsLoading] = useState(true)
++  const [connectionError, setConnectionError] = useState<string | null>(null)
+   const messagesEndRef = useRef<HTMLDivElement>(null)
+   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+ 
+@@ -30,6 +32,12 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+     const newSocket = io(SOCKET_URL)
+     setSocket(newSocket)
+ 
++    // Handle connection errors
++    newSocket.on('connect_error', () => {
++      setConnectionError('Failed to connect to chat server')
++      setIsLoading(false)
++    })
++
+     // Join room
+     newSocket.emit('joinRoom', { roomId: room.id, username })
+ 
+@@ -38,6 +46,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+       if (data.messages) {
+         setMessages(data.messages)
+       }
++      setIsLoading(false)
+     })
+ 
+     // Listen for new messages
+@@ -132,7 +141,30 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+ 
+       {/* Messages */}
+       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+-        {messages.length === 0 ? (
++        {isLoading ? (
++          <div className="flex items-center justify-center h-full">
++            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
++          </div>
++        ) : connectionError ? (
++          <div className="flex items-center justify-center h-full text-red-500">
++            <div className="text-center">
++              <svg
++                className="mx-auto h-12 w-12 text-red-400"
++                fill="none"
++                viewBox="0 0 24 24"
++                stroke="currentColor"
++              >
++                <path
++                  strokeLinecap="round"
++                  strokeLinejoin="round"
++                  strokeWidth={2}
++                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
++                />
++              </svg>
++              <p className="mt-2 text-sm font-semibold">{connectionError}</p>
++            </div>
++          </div>
++        ) : messages.length === 0 ? (
+           <div className="flex items-center justify-center h-full text-gray-500">
+             <div className="text-center">
+               <svg
