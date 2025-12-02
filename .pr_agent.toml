@@ -22,7 +22,6 @@ demand_code_suggestions_self_review = true
 suggestions_depth = "exhaustive"
 enable_suggestion_type_reuse = true
 num_best_practice_suggestions = 100
-num_code_suggestions_per_chunk = 100
 
 [github_app]
 pr_commands = [
