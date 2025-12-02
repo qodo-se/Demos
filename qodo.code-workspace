@@ -1,12 +1,15 @@
 {
     "folders": [
         {
+            "name": ".qodo",
+            "path": "../../../.qodo"
+        },
+        {
             "name": "Demos",
             "path": "."
         },
         {
-            "name": ".qodo",
-            "path": "../../../.qodo"
+            "path": "../POVs"
         }
     ],
     "tasks": {
