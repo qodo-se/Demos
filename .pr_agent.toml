@@ -15,6 +15,7 @@ enable_help_text = true
 enable_ticket_labels = true
 enable_no_ticket_labels = true
 check_pr_additional_content = true
+enable_codebase_duplication_section = false
 
 [pr_code_suggestions]
 enable_help_text = true
