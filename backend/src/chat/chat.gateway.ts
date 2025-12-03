@@ -93,18 +93,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     // Validation
     if (!content || typeof content !== 'string') {
-      client.emit('error', { message: 'Message content is required' });
+      client.emit('error', { messageKey: 'error.message.required' });
       return;
     }
 
     const trimmedContent = content.trim();
     if (trimmedContent.length === 0) {
-      client.emit('error', { message: 'Message cannot be empty' });
+      client.emit('error', { messageKey: 'error.message.empty' });
       return;
     }
 
     if (trimmedContent.length > 1000) {
-      client.emit('error', { message: 'Message too long (max 1000 characters)' });
+      client.emit('error', { messageKey: 'error.message.tooLong', params: { maxLength: 1000 } });
       return;
     }
 
