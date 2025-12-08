@@ -91,8 +91,25 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {
     const { roomId, username, content } = payload;
 
+    // Validation
+    if (!content || typeof content !== 'string') {
+      client.emit('error', { message: 'Message content is required' });
+      return;
+    }
+
+    const trimmedContent = content.trim();
+    if (trimmedContent.length === 0) {
+      client.emit('error', { message: 'Message cannot be empty' });
+      return;
+    }
+
+    if (trimmedContent.length > 1000) {
+      client.emit('error', { message: 'Message too long (max 1000 characters)' });
+      return;
+    }
+
     // Save message to database
-    const message = await this.roomService.createMessage(roomId, username, content);
+    const message = await this.roomService.createMessage(roomId, username, trimmedContent);
 
     // Broadcast to all users in the room (including sender)
     this.server.to(roomId).emit('newMessage', {
