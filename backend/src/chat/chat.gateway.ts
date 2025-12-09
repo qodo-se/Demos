@@ -92,19 +92,20 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const { roomId, username, content } = payload;
 
     // Validation
+    // Assume an i18n service is injected, e.g., this.i18n
     if (!content || typeof content !== 'string') {
-      client.emit('error', { message: 'Message content is required' });
+      client.emit('error', { message: this.i18n.t('chat.errors.contentRequired') });
       return;
     }
 
     const trimmedContent = content.trim();
     if (trimmedContent.length === 0) {
-      client.emit('error', { message: 'Message cannot be empty' });
+      client.emit('error', { message: this.i18n.t('chat.errors.empty') });
       return;
     }
 
     if (trimmedContent.length > 1000) {
-      client.emit('error', { message: 'Message too long (max 1000 characters)' });
+      client.emit('error', { message: this.i18n.t('chat.errors.tooLong', { max: 1000 }) });
       return;
     }
 
