@@ -1,0 +1,297 @@
+diff --git a/frontend/src/App.tsx b/frontend/src/App.tsx
+index 81db857..6d99a5c 100644
+--- a/frontend/src/App.tsx
++++ b/frontend/src/App.tsx
+@@ -10,6 +10,23 @@ function App() {
+   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
+   const [username, setUsername] = useState('')
+   const [isUsernameSet, setIsUsernameSet] = useState(false)
++  const [darkMode, setDarkMode] = useState(() => {
++    if (typeof window !== 'undefined') {
++      return localStorage.getItem('theme') === 'dark' ||
++        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
++    }
++    return false
++  })
++
++  useEffect(() => {
++    if (darkMode) {
++      document.documentElement.classList.add('dark')
++      localStorage.setItem('theme', 'dark')
++    } else {
++      document.documentElement.classList.remove('dark')
++      localStorage.setItem('theme', 'light')
++    }
++  }, [darkMode])
+ 
+   useEffect(() => {
+     fetchRooms()
+@@ -48,16 +65,37 @@ function App() {
+     }
+   }
+ 
++  const ThemeToggle = () => (
++    <button
++      onClick={() => setDarkMode(!darkMode)}
++      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
++      aria-label="Toggle theme"
++    >
++      {darkMode ? (
++        <svg className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
++          <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
++        </svg>
++      ) : (
++        <svg className="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
++          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
++        </svg>
++      )}
++    </button>
++  )
++
+   if (!isUsernameSet) {
+     return (
+-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
++      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
++        <div className="absolute top-4 right-4">
++          <ThemeToggle />
++        </div>
++        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
++          <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 text-center">
+             Collaboration Tool
+           </h1>
+           <form onSubmit={handleUsernameSubmit}>
+             <div className="mb-4">
+-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
++              <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                 Enter your username
+               </label>
+               <input
+@@ -65,7 +103,7 @@ function App() {
+                 id="username"
+                 value={username}
+                 onChange={(e) => setUsername(e.target.value)}
+-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
++                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                 placeholder="Your name"
+                 required
+               />
+@@ -83,7 +121,10 @@ function App() {
+   }
+ 
+   return (
+-    <div className="min-h-screen bg-gray-100">
++    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
++      <div className="absolute top-4 right-4 z-10">
++        <ThemeToggle />
++      </div>
+       <div className="flex h-screen">
+         <RoomList
+           rooms={rooms}
+@@ -96,10 +137,10 @@ function App() {
+           {selectedRoom ? (
+             <ChatRoom room={selectedRoom} username={username} />
+           ) : (
+-            <div className="h-full flex items-center justify-center text-gray-500">
++            <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+               <div className="text-center">
+                 <svg
+-                  className="mx-auto h-12 w-12 text-gray-400"
++                  className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500"
+                   fill="none"
+                   viewBox="0 0 24 24"
+                   stroke="currentColor"
+@@ -111,8 +152,8 @@ function App() {
+                     d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                   />
+                 </svg>
+-                <h3 className="mt-2 text-lg font-medium text-gray-900">No room selected</h3>
+-                <p className="mt-1 text-sm text-gray-500">
++                <h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-white">No room selected</h3>
++                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                   Select a room from the sidebar or create a new one
+                 </p>
+               </div>
+diff --git a/frontend/src/components/ChatRoom.tsx b/frontend/src/components/ChatRoom.tsx
+index 94e8884..49d485d 100644
+--- a/frontend/src/components/ChatRoom.tsx
++++ b/frontend/src/components/ChatRoom.tsx
+@@ -121,11 +121,11 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+     .map(([user]) => user)
+ 
+   return (
+-    <div className="flex flex-col h-full bg-gray-50">
++    <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-900">
+       {/* Header */}
+-      <div className="bg-white border-b border-gray-200 p-4">
+-        <h2 className="text-xl font-bold text-gray-800">{room.name}</h2>
+-        <p className="text-sm text-gray-500">
++      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
++        <h2 className="text-xl font-bold text-gray-800 dark:text-white">{room.name}</h2>
++        <p className="text-sm text-gray-500 dark:text-gray-400">
+           {messages.length} message{messages.length !== 1 ? 's' : ''}
+         </p>
+       </div>
+@@ -133,10 +133,10 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+       {/* Messages */}
+       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+         {messages.length === 0 ? (
+-          <div className="flex items-center justify-center h-full text-gray-500">
++          <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
+             <div className="text-center">
+               <svg
+-                className="mx-auto h-12 w-12 text-gray-400"
++                className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+@@ -149,7 +149,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+                 />
+               </svg>
+               <p className="mt-2 text-sm">No messages yet</p>
+-              <p className="text-xs text-gray-400">Be the first to send a message!</p>
++              <p className="text-xs text-gray-400 dark:text-gray-500">Be the first to send a message!</p>
+             </div>
+           </div>
+         ) : (
+@@ -162,7 +162,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                   message.username === username
+                     ? 'bg-indigo-600 text-white'
+-                    : 'bg-white text-gray-800'
++                    : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-white'
+                 }`}
+               >
+                 {message.username !== username && (
+@@ -171,7 +171,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+                 <p className="break-words">{message.content}</p>
+                 <p
+                   className={`text-xs mt-1 ${
+-                    message.username === username ? 'text-indigo-200' : 'text-gray-500'
++                    message.username === username ? 'text-indigo-200' : 'text-gray-500 dark:text-gray-400'
+                   }`}
+                 >
+                   {new Date(message.createdAt).toLocaleTimeString([], {
+@@ -188,25 +188,25 @@ function ChatRoom({ room, username }: ChatRoomProps) {
+ 
+       {/* Typing indicator */}
+       {typingUsers.length > 0 && (
+-        <div className="px-4 py-2 text-sm text-gray-500">
++        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
+           {typingUsers.join(', ')} {typingUsers.length === 1 ? 'is' : 'are'} typing...
+         </div>
+       )}
+ 
+       {/* Input */}
+-      <div className="bg-white border-t border-gray-200 p-4">
++      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
+         <form onSubmit={handleSendMessage} className="flex gap-2">
+           <input
+             type="text"
+             value={newMessage}
+             onChange={handleTyping}
+             placeholder="Type a message..."
+-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
++            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+           />
+           <button
+             type="submit"
+             disabled={!newMessage.trim()}
+-            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
++            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
+           >
+             Send
+           </button>
+diff --git a/frontend/src/components/RoomList.tsx b/frontend/src/components/RoomList.tsx
+index a2f9985..abaadf0 100644
+--- a/frontend/src/components/RoomList.tsx
++++ b/frontend/src/components/RoomList.tsx
+@@ -23,15 +23,15 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
+   }
+ 
+   return (
+-    <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
++    <div className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+       {/* Header */}
+-      <div className="p-4 border-b border-gray-200">
+-        <h2 className="text-xl font-bold text-gray-800">Rooms</h2>
+-        <p className="text-sm text-gray-500 mt-1">Logged in as: {username}</p>
++      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
++        <h2 className="text-xl font-bold text-gray-800 dark:text-white">Rooms</h2>
++        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Logged in as: {username}</p>
+       </div>
+ 
+       {/* Create Room Button */}
+-      <div className="p-4 border-b border-gray-200">
++      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+         {!isCreating ? (
+           <button
+             onClick={() => setIsCreating(true)}
+@@ -59,7 +59,7 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
+               value={newRoomName}
+               onChange={(e) => setNewRoomName(e.target.value)}
+               placeholder="Room name"
+-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-2"
++              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-2"
+               autoFocus
+             />
+             <div className="flex gap-2">
+@@ -75,7 +75,7 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
+                   setIsCreating(false)
+                   setNewRoomName('')
+                 }}
+-                className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-200"
++                className="flex-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors duration-200"
+               >
+                 Cancel
+               </button>
+@@ -87,29 +87,29 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
+       {/* Room List */}
+       <div className="flex-1 overflow-y-auto">
+         {rooms.length === 0 ? (
+-          <div className="p-4 text-center text-gray-500">
++          <div className="p-4 text-center text-gray-500 dark:text-gray-400">
+             <p>No rooms yet</p>
+             <p className="text-sm mt-1">Create one to get started!</p>
+           </div>
+         ) : (
+-          <div className="divide-y divide-gray-200">
++          <div className="divide-y divide-gray-200 dark:divide-gray-700">
+             {rooms.map((room) => (
+               <button
+                 key={room.id}
+                 onClick={() => onSelectRoom(room)}
+-                className={`w-full p-4 text-left hover:bg-gray-50 transition-colors duration-200 ${
+-                  selectedRoom?.id === room.id ? 'bg-indigo-50 border-l-4 border-indigo-600' : ''
++                className={`w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${
++                  selectedRoom?.id === room.id ? 'bg-indigo-50 dark:bg-indigo-900/30 border-l-4 border-indigo-600' : ''
+                 }`}
+               >
+                 <div className="flex items-center justify-between">
+-                  <h3 className="font-medium text-gray-800">{room.name}</h3>
++                  <h3 className="font-medium text-gray-800 dark:text-white">{room.name}</h3>
+                   {room._count && room._count.messages > 0 && (
+-                    <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
++                    <span className="text-xs bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full">
+                       {room._count.messages}
+                     </span>
+                   )}
+                 </div>
+-                <p className="text-xs text-gray-500 mt-1">
++                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                   Created {new Date(room.createdAt).toLocaleDateString()}
+                 </p>
+               </button>
+diff --git a/frontend/tailwind.config.js b/frontend/tailwind.config.js
+index dca8ba0..9121d4e 100644
+--- a/frontend/tailwind.config.js
++++ b/frontend/tailwind.config.js
+@@ -4,6 +4,7 @@ export default {
+     "./index.html",
+     "./src/**/*.{js,ts,jsx,tsx}",
+   ],
++  darkMode: 'class',
+   theme: {
+     extend: {},
+   },
