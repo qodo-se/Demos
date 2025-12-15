@@ -1,0 +1,11 @@
+# [config]
+# model = "gemini-2.5-pro"
+# fallback_models = ["GPT-5-pro", "gpt-5"]
+
+[github_app]
+pr_commands = ["/improve"]
+
+[pr_code_suggestions]
+commitable_code_suggestions = true # default false
+suggestions_depth = "regular"      # "selective" | "exhaustive"
+focus_only_on_problems = true
