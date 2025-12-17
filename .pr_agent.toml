@@ -26,6 +26,7 @@ num_best_practice_suggestions = 100
 
 [github_app]
 pr_commands = [
+    "/agentic_review",
     "/describe",
     "/compliance",
     "/improve",
@@ -34,6 +35,7 @@ pr_commands = [
 
 [gitlab]
 pr_commands = [
+    "/agentic_review",
     "/describe",
     "/compliance",
     "/improve",
@@ -42,6 +44,7 @@ pr_commands = [
 
 [bitbucket_app]
 pr_commands = [
+    "/agentic_review",
     "/describe",
     "/compliance",
     "/improve",
