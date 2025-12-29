@@ -121,11 +121,11 @@ function ChatRoom({ room, username }: ChatRoomProps) {
     .map(([user]) => user)
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
+    <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
-        <h2 className="text-xl font-bold text-gray-800">{room.name}</h2>
-        <p className="text-sm text-gray-500">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">{room.name}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           {messages.length} message{messages.length !== 1 ? 's' : ''}
         </p>
       </div>
@@ -133,10 +133,10 @@ function ChatRoom({ room, username }: ChatRoomProps) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-gray-500">
+          <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
             <div className="text-center">
               <svg
-                className="mx-auto h-12 w-12 text-gray-400"
+                className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -149,7 +149,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
                 />
               </svg>
               <p className="mt-2 text-sm">No messages yet</p>
-              <p className="text-xs text-gray-400">Be the first to send a message!</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Be the first to send a message!</p>
             </div>
           </div>
         ) : (
@@ -162,7 +162,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                   message.username === username
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-white text-gray-800'
+                    : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-white'
                 }`}
               >
                 {message.username !== username && (
@@ -171,7 +171,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
                 <p className="break-words">{message.content}</p>
                 <p
                   className={`text-xs mt-1 ${
-                    message.username === username ? 'text-indigo-200' : 'text-gray-500'
+                    message.username === username ? 'text-indigo-200' : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
                   {new Date(message.createdAt).toLocaleTimeString([], {
@@ -188,25 +188,25 @@ function ChatRoom({ room, username }: ChatRoomProps) {
 
       {/* Typing indicator */}
       {typingUsers.length > 0 && (
-        <div className="px-4 py-2 text-sm text-gray-500">
+        <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
           {typingUsers.join(', ')} {typingUsers.length === 1 ? 'is' : 'are'} typing...
         </div>
       )}
 
       {/* Input */}
-      <div className="bg-white border-t border-gray-200 p-4">
+      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
         <form onSubmit={handleSendMessage} className="flex gap-2">
           <input
             type="text"
             value={newMessage}
             onChange={handleTyping}
             placeholder="Type a message..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           />
           <button
             type="submit"
             disabled={!newMessage.trim()}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed"
           >
             Send
           </button>
