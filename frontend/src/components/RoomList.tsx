@@ -23,15 +23,15 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
   }
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+    <div className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-xl font-bold text-gray-800">Rooms</h2>
-        <p className="text-sm text-gray-500 mt-1">Logged in as: {username}</p>
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">Rooms</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Logged in as: {username}</p>
       </div>
 
       {/* Create Room Button */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         {!isCreating ? (
           <button
             onClick={() => setIsCreating(true)}
@@ -59,7 +59,7 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
               value={newRoomName}
               onChange={(e) => setNewRoomName(e.target.value)}
               placeholder="Room name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-2"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-2"
               autoFocus
             />
             <div className="flex gap-2">
@@ -75,7 +75,7 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
                   setIsCreating(false)
                   setNewRoomName('')
                 }}
-                className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-200"
+                className="flex-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors duration-200"
               >
                 Cancel
               </button>
@@ -87,29 +87,29 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
       {/* Room List */}
       <div className="flex-1 overflow-y-auto">
         {rooms.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">
+          <div className="p-4 text-center text-gray-500 dark:text-gray-400">
             <p>No rooms yet</p>
             <p className="text-sm mt-1">Create one to get started!</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 dark:divide-gray-700">
             {rooms.map((room) => (
               <button
                 key={room.id}
                 onClick={() => onSelectRoom(room)}
-                className={`w-full p-4 text-left hover:bg-gray-50 transition-colors duration-200 ${
-                  selectedRoom?.id === room.id ? 'bg-indigo-50 border-l-4 border-indigo-600' : ''
+                className={`w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 ${
+                  selectedRoom?.id === room.id ? 'bg-indigo-50 dark:bg-indigo-900/30 border-l-4 border-indigo-600' : ''
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <h3 className="font-medium text-gray-800">{room.name}</h3>
+                  <h3 className="font-medium text-gray-800 dark:text-white">{room.name}</h3>
                   {room._count && room._count.messages > 0 && (
-                    <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
+                    <span className="text-xs bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full">
                       {room._count.messages}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   Created {new Date(room.createdAt).toLocaleDateString()}
                 </p>
               </button>
