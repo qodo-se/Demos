@@ -32,21 +32,30 @@ enable_compliance_agent = true
 
 [github_app]
 pr_commands = [
+    # "/describe",
+    # "/compliance",
+    # "/improve",
     "/agentic_review",
-    "/agentic_describe",
-    '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+    # "/agentic_describe",
+    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
 ]
 
 [gitlab]
 pr_commands = [
+    # "/describe",
+    # "/compliance",
+    # "/improve",
+    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
     "/agentic_review",
-    "/agentic_describe",
-    '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+    # "/agentic_describe",
 ]
 
 [bitbucket_app]
 pr_commands = [
+    # "/describe",
+    # "/compliance",
+    # "/improve",
+    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
     "/agentic_review",
-    "/agentic_describe",
-    '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+    # "/agentic_describe",
 ]
