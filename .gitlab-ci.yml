@@ -3,7 +3,7 @@ stages:
 
 claude:
   stage: ai
-  image: anthropic/claude-code
+  image: node:24-alpine3.21
   # Adjust rules to fit how you want to trigger the job:
   # - manual runs
   # - merge request events
@@ -17,6 +17,7 @@ claude:
     - apk update
     - apk add --no-cache git curl bash
     - curl -fsSL https://claude.ai/install.sh | bash
+    - export PATH="$HOME/.claude/local/bin:$PATH" # Add this line
   script:
     # Optional: start a GitLab MCP server if your setup provides one
     - /bin/gitlab-mcp-server || true
