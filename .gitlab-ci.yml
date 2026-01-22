@@ -3,7 +3,7 @@ stages:
 
 claude:
   stage: ai
-  image: node:24-alpine3.21
+  image: anthropic/claude-code
   # Adjust rules to fit how you want to trigger the job:
   # - manual runs
   # - merge request events
