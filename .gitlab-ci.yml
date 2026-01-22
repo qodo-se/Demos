@@ -22,6 +22,7 @@ claude:
     - /bin/gitlab-mcp-server || true
     # Use AI_FLOW_* variables when invoking via web/API triggers with context payloads
     - echo "$AI_FLOW_INPUT for $AI_FLOW_CONTEXT on $AI_FLOW_EVENT"
+    - export ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
     - >
       claude
       -p "${AI_FLOW_INPUT:-'Review this MR and implement the requested changes'}"
