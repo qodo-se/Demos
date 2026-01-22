@@ -16,8 +16,7 @@ claude:
   before_script:
     - apk update
     - apk add --no-cache git curl bash
-    - curl -fsSL https://claude.ai/install.sh | bash
-    - export PATH="$HOME/.claude/local/bin:$PATH" # Add this line
+    - npm install -g @anthropic-ai/claude-code
   script:
     # Optional: start a GitLab MCP server if your setup provides one
     - /bin/gitlab-mcp-server || true
