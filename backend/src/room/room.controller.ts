@@ -1,13 +1,27 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Post, 
+  Body, 
+  Param, 
+  UsePipes,
+  ParseUUIDPipe,
+  HttpStatus,
+  HttpCode,
+} from '@nestjs/common';
 import { RoomService } from './room.service';
+import { CreateRoomDto } from './dto/create-room.dto';
+import { ValidationPipe } from '../common/pipes/validation.pipe';
 
 @Controller('rooms')
 export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
   @Post()
-  async createRoom(@Body() body: { name: string }) {
-    return this.roomService.createRoom(body.name);
+  @HttpCode(HttpStatus.CREATED)
+  @UsePipes(ValidationPipe)
+  async createRoom(@Body() createRoomDto: CreateRoomDto) {
+    return this.roomService.createRoom(createRoomDto.name);
   }
 
   @Get()
@@ -16,12 +30,12 @@ export class RoomController {
   }
 
   @Get(':id')
-  async getRoomById(@Param('id') id: string) {
+  async getRoomById(@Param('id', ParseUUIDPipe) id: string) {
     return this.roomService.getRoomById(id);
   }
 
   @Get(':id/messages')
-  async getRoomMessages(@Param('id') id: string) {
+  async getRoomMessages(@Param('id', ParseUUIDPipe) id: string) {
     return this.roomService.getRoomMessages(id);
   }
 }
