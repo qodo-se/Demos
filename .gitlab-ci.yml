@@ -11,7 +11,7 @@ is-trivial:
     - npm install -g @qodo/command
     - |
       curl --request POST \
-        --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+        --header "PRIVATE-TOKEN: ${PROJECT_GITLAB_TOKEN}" \
         --header "Content-Type: application/json" \
         --data '{"body": "Checking if this branch has trivial changes, or not."}' \
         "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
@@ -20,19 +20,19 @@ is-trivial:
       IS_TRIVIAL=$(tail -1 qodo_output.txt | jq -r '.is_trivial')
       if [ "$IS_TRIVIAL" = "false" ]; then
         curl --request POST \
-          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "PRIVATE-TOKEN: ${PROJECT_GITLAB_TOKEN}" \
           --header "Content-Type: application/json" \
           --data '{"body": "This PR is not trivial. Trigger Qodo Review."}' \
           "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
         curl --request POST \
-          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "PRIVATE-TOKEN: ${PROJECT_GITLAB_TOKEN}" \
           --header "Content-Type: application/json" \
           --data '{"body": "/agentic_review"}' \
           "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
       fi
       if [ "$IS_TRIVIAL" = "true" ]; then
         curl --request POST \
-          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "PRIVATE-TOKEN: ${PROJECT_GITLAB_TOKEN}" \
           --header "Content-Type: application/json" \
           --data '{"body": "This PR is trivial. Skipping Qodo Review."}' \
           "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
