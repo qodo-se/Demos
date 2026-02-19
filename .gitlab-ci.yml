@@ -9,6 +9,11 @@ is-trivial:
   script:
     - apk add --no-cache curl jq git
     - npm install -g @qodo/command
+    - echo "API URL: ${CI_API_V4_URL}"
+    - echo "Project ID: ${CI_PROJECT_ID}"
+    - echo "MR IID: ${CI_MERGE_REQUEST_IID}"
+    - echo "Token length: ${#PROJECT_GITLAB_TOKEN}"
+    - echo "Full URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
     - |
       curl --request POST \
         --header "PRIVATE-TOKEN: ${PROJECT_GITLAB_TOKEN}" \
