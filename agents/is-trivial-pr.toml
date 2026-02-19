@@ -1,5 +1,5 @@
 version = "1.0"
-[commands.my_agent]
+[commands.is_trivial_pr]
 description = "Checks if this branch has got trivial changes"
 instructions = """
 If the current git branch is the `main` branch, this is not a trivial change.
