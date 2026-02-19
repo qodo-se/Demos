@@ -1,0 +1,32 @@
+version = "1.0"
+[commands.my_agent]
+description = "Checks if this branch has got trivial changes"
+instructions = """
+If the current git branch is the `main` branch, this is not a trivial change.
+
+If the current git branch is not the `main` branch, prepare the diff between current branch and `main` branch.
+
+Here are the rules to determine if this branch contains changes:
+
+- If the only file modified is `.gitlab-ci.yml`
+
+Return the result whether the changes in current branch are trivial or not.
+"""
+
+tools = ["filesystem", "git", "shell"]
+
+execution_strategy = "act"
+
+output_schema = """
+{
+    "properties": {
+        "is_trivial": {
+            "type": "boolean",
+            "description": "Is the diff between current branch and main branch trivial?"
+        }
+    }
+}
+"""
+
+# Optional: Success condition for CI/CD
+exit_expression = "is_trivial"

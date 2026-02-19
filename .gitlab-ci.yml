@@ -1,45 +1,36 @@
-stages:
-  - ai
-
 hello-world-comment:
   stage: ai
-  image: alpine:latest
+  image: node:24-alpine3.21
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
-    - apk add --no-cache curl
+    - apk add --no-cache curl jq
+    - npm install -g @qodo/command
     - |
       curl --request POST \
         --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
         --header "Content-Type: application/json" \
-        --data '{"body": "Hello World"}' \
+        --data '{"body": "Checking if this branch has trivial changes, or not."}' \
         "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
-
-claude:
-  stage: ai
-  image: node:24-alpine3.21
-  # Adjust rules to fit how you want to trigger the job:
-  # - manual runs
-  # - merge request events
-  # - web/API triggers when a comment contains '@claude'
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-  variables:
-    GIT_STRATEGY: fetch
-  before_script:
-    - apk update
-    - apk add --no-cache git curl bash
-    - npm install -g @anthropic-ai/claude-code
-  script:
-    # Optional: start a GitLab MCP server if your setup provides one
-    - /bin/gitlab-mcp-server || true
-    # Use AI_FLOW_* variables when invoking via web/API triggers with context payloads
-    - echo "$AI_FLOW_INPUT for $AI_FLOW_CONTEXT on $AI_FLOW_EVENT"
-    - export ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
-    - >
-      claude
-      -p "${AI_FLOW_INPUT:-'Review this MR and implement the requested changes'}"
-      --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
-      --debug
+    - qodo --agent-file=./agents/is-trivial-pr.toml --ci | tee qodo_output.txt
+    - |
+      IS_TRIVIAL=$(tail -1 qodo_output.txt | jq -r '.is_trivial')
+      if [ "$IS_TRIVIAL" = "false" ]; then
+        curl --request POST \
+          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "Content-Type: application/json" \
+          --data '{"body": "This PR is not trivial. Trigger Qodo Review."}' \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
+        curl --request POST \
+          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "Content-Type: application/json" \
+          --data '{"body": "/agentic_review"}' \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
+      fi
+      if [ "$IS_TRIVIAL" = "true" ]; then
+        curl --request POST \
+          --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+          --header "Content-Type: application/json" \
+          --data '{"body": "This PR is trivial. Skipping Qodo Review."}' \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}/notes"
+      fi
