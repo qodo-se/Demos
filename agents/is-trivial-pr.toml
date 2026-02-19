@@ -27,6 +27,3 @@ output_schema = """
     }
 }
 """
-
-# Optional: Success condition for CI/CD
-exit_expression = "is_trivial"
