@@ -1,61 +1,96 @@
-[config]
-model = "gemini-2.5-pro"
-fallback_models = ["GPT-5-pro", "gpt-5"]
-
-[pr_description]
-enable_pr_diagram = true
-enable_help_text = true
-enable_large_pr_handling = true
-generate_ai_title = true
-extra_instructions = ""
-
-[pr_compliance]
-enable_todo_scan = true
-enable_help_text = true
-enable_ticket_labels = true
-enable_no_ticket_labels = true
-check_pr_additional_content = true
-enable_codebase_duplication_section = false
-
-[pr_code_suggestions]
-enable_help_text = true
-demand_code_suggestions_self_review = true
-suggestions_depth = "exhaustive"
-enable_suggestion_type_reuse = true
-num_best_practice_suggestions = 100
-
 [review_agent]
-enabled = true
-publish_output = true
-enable_issues_agent = true
-enable_compliance_agent = true
+enabled = true                 # unnecessary after release
+publish_output = true          # unnecessary after release
+enable_issues_agent = true     # unnecessary after release
+enable_compliance_agent = true # unnecessary after release
+persistent_comment = true
+
+# if "both" mode is too noisy, keep in "summary" mode in this repo
+comments_location_policy = "both"
+
+# severity threshold rank for inline comments: 
+# 3=action_required, 
+# 2=remediation_recommended, 
+# 1=informational. 
+# Only findings with rank >= threshold will be published inline
+inline_comments_severity_threshold = 3
+
+# Extra prompt to be added as instruction for the agent, for outlier scenarios
+issues_extra_instructions = ""
+compliance_extra_instructions = ""
 
 [github_app]
-pr_commands = [
-    # "/describe",
-    # "/compliance",
-    # "/improve",
+pr_commands = [ # list of tools to trigger automatically when a new PR is created
+    "/agentic_describe",
     "/agentic_review",
-    # "/agentic_describe",
-    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
 ]
 
-[gitlab]
-pr_commands = [
-    # "/describe",
-    # "/compliance",
-    # "/improve",
-    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+handle_push_trigger = true # updates feedback comments with every new commit
+push_commands = [ # list of tools to trigger upon each new commit; requires line above to be set to true
     "/agentic_review",
-    # "/agentic_describe",
 ]
 
-[bitbucket_app]
-pr_commands = [
-    # "/describe",
-    # "/compliance",
-    # "/improve",
-    # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
-    "/agentic_review",
-    # "/agentic_describe",
-]
+[pr_compliance]
+enable_rules_platform = true # unnecessary after Rules release
+
+# [config]
+# model = "gemini-2.5-pro"
+# fallback_models = ["GPT-5-pro", "gpt-5"]
+
+# [pr_description]
+# enable_pr_diagram = true
+# enable_help_text = true
+# enable_large_pr_handling = true
+# generate_ai_title = true
+# extra_instructions = ""
+
+# [pr_compliance]
+# enable_todo_scan = true
+# enable_help_text = true
+# enable_ticket_labels = true
+# enable_no_ticket_labels = true
+# check_pr_additional_content = true
+# enable_codebase_duplication_section = false
+
+# [pr_code_suggestions]
+# enable_help_text = true
+# demand_code_suggestions_self_review = true
+# suggestions_depth = "exhaustive"
+# enable_suggestion_type_reuse = true
+# num_best_practice_suggestions = 100
+
+# [review_agent]
+# enabled = true
+# publish_output = true
+# enable_issues_agent = true
+# enable_compliance_agent = true
+
+# [github_app]
+# pr_commands = [
+#     # "/describe",
+#     # "/compliance",
+#     # "/improve",
+#     "/agentic_review",
+#     # "/agentic_describe",
+#     # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+# ]
+
+# [gitlab]
+# pr_commands = [
+#     # "/describe",
+#     # "/compliance",
+#     # "/improve",
+#     # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+#     "/agentic_review",
+#     # "/agentic_describe",
+# ]
+
+# [bitbucket_app]
+# pr_commands = [
+#     # "/describe",
+#     # "/compliance",
+#     # "/improve",
+#     # '/custom_prompt --pr_custom_prompt.prompt="Suggest improvements as an frontend accessibility expert, security expert and performance optimization expert"',
+#     "/agentic_review",
+#     # "/agentic_describe",
+# ]
