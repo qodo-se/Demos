@@ -13,7 +13,7 @@ comments_location_policy = "both"
 # 2=remediation_recommended, 
 # 1=informational. 
 # Only findings with rank >= threshold will be published inline
-inline_comments_severity_threshold = 3
+inline_comments_severity_threshold = 1
 
 # Extra prompt to be added as instruction for the agent, for outlier scenarios
 issues_extra_instructions = ""
@@ -21,7 +21,7 @@ compliance_extra_instructions = ""
 
 [github_app]
 pr_commands = [ # list of tools to trigger automatically when a new PR is created
-    "/agentic_describe",
+    # "/agentic_describe",
     "/agentic_review",
 ]
 
@@ -30,8 +30,10 @@ push_commands = [ # list of tools to trigger upon each new commit; requires line
     "/agentic_review",
 ]
 
-[pr_compliance]
-enable_rules_platform = true # unnecessary after Rules release
+# [pr_compliance]
+# enable_rules_platform = true # unnecessary after Rules release
+
+# ---
 
 # [config]
 # model = "gemini-2.5-pro"
