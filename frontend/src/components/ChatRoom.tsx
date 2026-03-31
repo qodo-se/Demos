@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { io, Socket } from 'socket.io-client'
+import toast from 'react-hot-toast'
 import { Room, Message } from '../types'
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000'
@@ -14,6 +15,7 @@ function ChatRoom({ room, username }: ChatRoomProps) {
   const [newMessage, setNewMessage] = useState('')
   const [socket, setSocket] = useState<Socket | null>(null)
   const [isTyping, setIsTyping] = useState<{ [key: string]: boolean }>({})
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected' | 'reconnecting'>('disconnected')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -27,8 +29,48 @@ function ChatRoom({ room, username }: ChatRoomProps) {
 
   useEffect(() => {
     // Connect to socket
-    const newSocket = io(SOCKET_URL)
+    const newSocket = io(SOCKET_URL, {
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionAttempts: 5,
+    })
     setSocket(newSocket)
+
+    // Connection status listeners
+    newSocket.on('connect', () => {
+      setConnectionStatus('connected')
+      console.log('Socket connected')
+    })
+
+    newSocket.on('disconnect', () => {
+      setConnectionStatus('disconnected')
+      toast.error('Connection lost. Attempting to reconnect...')
+    })
+
+    newSocket.on('reconnect', (attemptNumber) => {
+      setConnectionStatus('connected')
+      toast.success('Reconnected successfully!')
+      console.log(`Reconnected after ${attemptNumber} attempts`)
+    })
+
+    newSocket.on('reconnect_attempt', () => {
+      setConnectionStatus('reconnecting')
+    })
+
+    newSocket.on('reconnect_error', (error) => {
+      console.error('Reconnection error:', error)
+    })
+
+    newSocket.on('reconnect_failed', () => {
+      setConnectionStatus('disconnected')
+      toast.error('Failed to reconnect. Please refresh the page.')
+    })
+
+    newSocket.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+      setConnectionStatus('disconnected')
+      toast.error('Failed to connect to chat server.')
+    })
 
     // Join room
     newSocket.emit('joinRoom', { roomId: room.id, username })
@@ -73,6 +115,11 @@ function ChatRoom({ room, username }: ChatRoomProps) {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault()
     if (newMessage.trim() && socket) {
+      if (connectionStatus !== 'connected') {
+        toast.error('Cannot send message. Not connected to server.')
+        return
+      }
+
       socket.emit('sendMessage', {
         roomId: room.id,
         username,
@@ -124,10 +171,31 @@ function ChatRoom({ room, username }: ChatRoomProps) {
     <div className="flex flex-col h-full bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 p-4">
-        <h2 className="text-xl font-bold text-gray-800">{room.name}</h2>
-        <p className="text-sm text-gray-500">
-          {messages.length} message{messages.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-800">{room.name}</h2>
+            <p className="text-sm text-gray-500">
+              {messages.length} message{messages.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+          {/* Connection Status Indicator */}
+          <div className="flex items-center gap-2">
+            <div className={`h-2 w-2 rounded-full ${
+              connectionStatus === 'connected' ? 'bg-green-500' :
+              connectionStatus === 'reconnecting' ? 'bg-yellow-500 animate-pulse' :
+              'bg-red-500'
+            }`} />
+            <span className={`text-xs font-medium ${
+              connectionStatus === 'connected' ? 'text-green-600' :
+              connectionStatus === 'reconnecting' ? 'text-yellow-600' :
+              'text-red-600'
+            }`}>
+              {connectionStatus === 'connected' ? 'Connected' :
+               connectionStatus === 'reconnecting' ? 'Reconnecting...' :
+               'Disconnected'}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Messages */}

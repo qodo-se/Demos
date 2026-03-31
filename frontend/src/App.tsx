@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import RoomList from './components/RoomList'
 import ChatRoom from './components/ChatRoom'
 import { Room } from './types'
@@ -11,6 +12,22 @@ function App() {
   const [username, setUsername] = useState('')
   const [isUsernameSet, setIsUsernameSet] = useState(false)
 
+  // Load username from localStorage on mount
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('collaboration_username')
+    if (savedUsername) {
+      setUsername(savedUsername)
+      setIsUsernameSet(true)
+    }
+  }, [])
+
+  // Save username to localStorage when it changes and is set
+  useEffect(() => {
+    if (isUsernameSet && username) {
+      localStorage.setItem('collaboration_username', username)
+    }
+  }, [username, isUsernameSet])
+
   useEffect(() => {
     fetchRooms()
   }, [])
@@ -18,10 +35,14 @@ function App() {
   const fetchRooms = async () => {
     try {
       const response = await fetch(`${API_URL}/rooms`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch rooms')
+      }
       const data = await response.json()
       setRooms(data)
     } catch (error) {
       console.error('Error fetching rooms:', error)
+      toast.error('Failed to load rooms. Please refresh the page.')
     }
   }
 
@@ -34,10 +55,17 @@ function App() {
         },
         body: JSON.stringify({ name }),
       })
+      
+      if (!response.ok) {
+        throw new Error('Failed to create room')
+      }
+      
       const newRoom = await response.json()
       setRooms([newRoom, ...rooms])
+      toast.success(`Room "${name}" created successfully!`)
     } catch (error) {
       console.error('Error creating room:', error)
+      toast.error('Failed to create room. Please try again.')
     }
   }
 
@@ -45,7 +73,15 @@ function App() {
     e.preventDefault()
     if (username.trim()) {
       setIsUsernameSet(true)
+      toast.success(`Welcome, ${username}!`)
     }
+  }
+
+  const handleChangeUsername = () => {
+    setIsUsernameSet(false)
+    setSelectedRoom(null)
+    localStorage.removeItem('collaboration_username')
+    toast.success('Username cleared. Please enter a new username.')
   }
 
   if (!isUsernameSet) {
@@ -84,6 +120,30 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: '#10B981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            duration: 5000,
+            iconTheme: {
+              primary: '#EF4444',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
       <div className="flex h-screen">
         <RoomList
           rooms={rooms}
@@ -91,6 +151,7 @@ function App() {
           onSelectRoom={setSelectedRoom}
           onCreateRoom={createRoom}
           username={username}
+          onChangeUsername={handleChangeUsername}
         />
         <div className="flex-1">
           {selectedRoom ? (

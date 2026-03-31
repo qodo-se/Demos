@@ -7,9 +7,10 @@ interface RoomListProps {
   onSelectRoom: (room: Room) => void
   onCreateRoom: (name: string) => void
   username: string
+  onChangeUsername: () => void
 }
 
-function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }: RoomListProps) {
+function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username, onChangeUsername }: RoomListProps) {
   const [isCreating, setIsCreating] = useState(false)
   const [newRoomName, setNewRoomName] = useState('')
 
@@ -27,7 +28,16 @@ function RoomList({ rooms, selectedRoom, onSelectRoom, onCreateRoom, username }:
       {/* Header */}
       <div className="p-4 border-b border-gray-200">
         <h2 className="text-xl font-bold text-gray-800">Rooms</h2>
-        <p className="text-sm text-gray-500 mt-1">Logged in as: {username}</p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-sm text-gray-500">Logged in as: <span className="font-medium text-gray-700">{username}</span></p>
+          <button
+            onClick={onChangeUsername}
+            className="text-xs text-indigo-600 hover:text-indigo-800 hover:underline transition-colors duration-200"
+            title="Change username"
+          >
+            Change
+          </button>
+        </div>
       </div>
 
       {/* Create Room Button */}
